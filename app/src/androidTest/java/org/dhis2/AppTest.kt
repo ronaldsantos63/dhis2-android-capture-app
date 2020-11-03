@@ -9,6 +9,8 @@ import org.dhis2.data.service.workManager.WorkManagerModule
 import org.dhis2.data.user.UserModule
 import org.dhis2.utils.analytics.AnalyticsModule
 import org.hisp.dhis.android.core.D2Manager
+import org.hisp.dhis.android.core.D2ManagerInstantiatorType
+import org.hisp.dhis.android.core.D2TestingConfig
 
 class AppTest : App() {
 
@@ -26,8 +28,8 @@ class AppTest : App() {
 
     @Override
     override fun setUpServerComponent() {
-        D2Manager.setTestingDatabase(DB_TO_IMPORT, USERNAME)
-        D2Manager.blockingInstantiateD2(ServerModule.getD2Configuration(this))
+        D2Manager.setTestingConfig(D2TestingConfig(DB_TO_IMPORT, USERNAME))
+        D2Manager.blockingInstantiateD2(ServerModule.getD2Configuration(this), D2ManagerInstantiatorType.TESTING)
 
         serverComponent = appComponent.plus(ServerModule())
 

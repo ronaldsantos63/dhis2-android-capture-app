@@ -51,6 +51,7 @@ import org.dhis2.utils.timber.DebugTree;
 import org.dhis2.utils.timber.ReleaseTree;
 import org.hisp.dhis.android.core.D2;
 import org.hisp.dhis.android.core.D2Manager;
+import org.hisp.dhis.android.core.D2ManagerInstantiatorType;
 import org.jetbrains.annotations.NotNull;
 import org.matomo.sdk.Matomo;
 import org.matomo.sdk.Tracker;
@@ -196,7 +197,7 @@ public class App extends MultiDexApplication implements Components, LifecycleObs
     }
 
     protected void setUpServerComponent() {
-        D2 d2Configuration = D2Manager.blockingInstantiateD2(ServerModule.getD2Configuration(this));
+        D2 d2Configuration = D2Manager.blockingInstantiateD2(ServerModule.getD2Configuration(this), D2ManagerInstantiatorType.PROD);
         boolean isLogged = d2Configuration.userModule().isLogged().blockingGet();
         serverComponent = appComponent.plus(new ServerModule());
 
