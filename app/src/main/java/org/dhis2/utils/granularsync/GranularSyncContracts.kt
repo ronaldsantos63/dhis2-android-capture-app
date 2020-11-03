@@ -54,6 +54,7 @@ class GranularSyncContracts {
         fun reportError(throwable: Throwable)
         fun sendSMS()
         fun syncErrors(): List<ErrorViewModel>
+        fun getGateWayNumber(): String
     }
 
     interface OnDismissListener {

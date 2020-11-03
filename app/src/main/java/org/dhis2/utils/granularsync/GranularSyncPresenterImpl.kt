@@ -510,4 +510,8 @@ class GranularSyncPresenterImpl(
             }
         }
     }
+
+    override fun getGateWayNumber(): String {
+        return d2.smsModule().configCase().smsModuleConfig.blockingGet().gateway
+    }
 }

@@ -24,6 +24,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.work.WorkInfo
+import com.google.android.gms.auth.api.phone.SmsRetriever
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
@@ -53,8 +54,6 @@ import org.dhis2.utils.idlingresource.CountingIdlingResourceSingleton
 import org.hisp.dhis.android.core.common.State
 import org.hisp.dhis.android.core.imports.TrackerImportConflict
 
-private const val SMS_PERMISSIONS_REQ_ID = 102
-
 class SyncStatusDialog : BottomSheetDialogFragment(), GranularSyncContracts.View {
 
     @Inject
@@ -79,6 +78,8 @@ class SyncStatusDialog : BottomSheetDialogFragment(), GranularSyncContracts.View
     }
 
     companion object {
+        private const val SMS_PERMISSIONS_REQ_ID = 102
+        private const val REQ_SMS = 103
         private const val RECORD_UID = "RECORD_UID"
         private const val CONFLICT_TYPE = "CONFLICT_TYPE"
         private const val ORG_UNIT_DATA_VALUE = "ORG_UNIT_DATA_VALUE"
@@ -198,6 +199,10 @@ class SyncStatusDialog : BottomSheetDialogFragment(), GranularSyncContracts.View
         presenter.configure(this)
 
         retainInstance = true
+
+        context?.let {
+            SmsRetriever.getClient(it).startSmsUserConsent(presenter.getGateWayNumber())
+        }
 
         return binding!!.root
     }
@@ -635,9 +640,5 @@ class SyncStatusDialog : BottomSheetDialogFragment(), GranularSyncContracts.View
         if (context != null) {
             startActivityForResult(intent, REQ_SMS)
         }
-    }
-
-    companion object {
-        const val REQ_SMS = 1
     }
 }
