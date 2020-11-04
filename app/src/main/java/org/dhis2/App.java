@@ -197,7 +197,7 @@ public class App extends MultiDexApplication implements Components, LifecycleObs
     }
 
     protected void setUpServerComponent() {
-        D2 d2Configuration = D2Manager.blockingInstantiateD2(ServerModule.getD2Configuration(this), D2ManagerInstantiatorType.PROD);
+        D2 d2Configuration = D2Manager.blockingInstantiateD2(ServerModule.getD2Configuration(this));
         boolean isLogged = d2Configuration.userModule().isLogged().blockingGet();
         serverComponent = appComponent.plus(new ServerModule());
 

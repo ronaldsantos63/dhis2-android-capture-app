@@ -29,7 +29,7 @@ class AppTest : App() {
     @Override
     override fun setUpServerComponent() {
         D2Manager.setTestingConfig(D2TestingConfig(DB_TO_IMPORT, USERNAME))
-        D2Manager.blockingInstantiateD2(ServerModule.getD2Configuration(this), D2ManagerInstantiatorType.TESTING)
+        D2Manager.blockingInstantiateD2(ServerModule.getD2Configuration(this))
 
         serverComponent = appComponent.plus(ServerModule())
 
