@@ -6,6 +6,7 @@ import androidx.test.espresso.IdlingResourceTimeoutException
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.rule.ActivityTestRule
 import com.mapbox.mapboxsdk.maps.MapboxMap
+import com.mapbox.mapboxsdk.maps.Style
 import org.dhis2.R
 import org.dhis2.common.idlingresources.MapIdlingResource
 import org.dhis2.usescases.BaseTest
@@ -133,7 +134,6 @@ class SearchTETest : BaseTest() {
         }
     }
 
-    @Ignore
     @Test
     fun shouldSuccessfullyShowMapAndTeiCard() {
         val firstName = "Gertrude"
@@ -143,12 +143,12 @@ class SearchTETest : BaseTest() {
         searchTeiRobot {
             clickOnOptionMenu()
             clickOnShowMap()
-            swipeCarouselToLeft()
-            checkCarouselTEICardInfo(firstName)
             try {
                 mapIdlingResource = MapIdlingResource(rule)
                 IdlingRegistry.getInstance().register(mapIdlingResource)
                 map = mapIdlingResource!!.map
+                swipeCarouselToLeft()
+                checkCarouselTEICardInfo(firstName)
             } catch (ex: IdlingResourceTimeoutException) {
                 throw RuntimeException("Could not start test")
             }
