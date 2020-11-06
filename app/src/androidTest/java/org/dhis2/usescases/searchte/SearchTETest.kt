@@ -143,14 +143,14 @@ class SearchTETest : BaseTest() {
         searchTeiRobot {
             clickOnOptionMenu()
             clickOnShowMap()
-            try {
+            /*try {
                 mapIdlingResource = MapIdlingResource(rule)
                 IdlingRegistry.getInstance().register(mapIdlingResource)
                 map = mapIdlingResource!!.map
             } catch (ex: IdlingResourceTimeoutException) {
                 throw RuntimeException("Could not start test")
-            }
-            waitToDebounce(2000)
+            }*/
+            waitToDebounce(3000)
             swipeCarouselToLeft()
             checkCarouselTEICardInfo(firstName)
         }
