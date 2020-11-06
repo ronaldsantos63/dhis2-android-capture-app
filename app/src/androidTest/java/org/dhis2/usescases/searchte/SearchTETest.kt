@@ -150,6 +150,7 @@ class SearchTETest : BaseTest() {
             } catch (ex: IdlingResourceTimeoutException) {
                 throw RuntimeException("Could not start test")
             }
+            waitToDebounce(2000)
             swipeCarouselToLeft()
             checkCarouselTEICardInfo(firstName)
         }
