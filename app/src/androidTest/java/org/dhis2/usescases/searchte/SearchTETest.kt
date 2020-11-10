@@ -136,22 +136,20 @@ class SearchTETest : BaseTest() {
 
     @Test
     fun shouldSuccessfullyShowMapAndTeiCard() {
-        val firstName = "Gertrude"
+        val firstName = "Jimmy"
 
-        prepareChildProgrammeIntentAndLaunchActivity()
+        prepareTestTBProgrammeIntentAndLaunchActivity()
 
         searchTeiRobot {
             clickOnOptionMenu()
             clickOnShowMap()
-            /*try {
+            try {
                 mapIdlingResource = MapIdlingResource(rule)
                 IdlingRegistry.getInstance().register(mapIdlingResource)
                 map = mapIdlingResource!!.map
             } catch (ex: IdlingResourceTimeoutException) {
                 throw RuntimeException("Could not start test")
-            }*/
-            waitToDebounce(3000)
-            swipeCarouselToLeft()
+            }
             checkCarouselTEICardInfo(firstName)
         }
     }
@@ -200,16 +198,25 @@ class SearchTETest : BaseTest() {
         }.also { rule.launchActivity(it) }
     }
 
+    private fun prepareTestTBProgrammeIntentAndLaunchActivity() {
+        Intent().apply {
+            putExtra(PROGRAM_UID, TB_PROGRAM_UID)
+            putExtra(CHILD_TE_TYPE, TB_TE_TYPE_VALUE)
+        }.also { rule.launchActivity(it) }
+    }
+
     companion object {
         const val PROGRAM_UID = "PROGRAM_UID"
         const val CHILD_PROGRAM_UID_VALUE = "IpHINAT79UW"
         const val XX_TEST_PROGRAM_RULES_UID_VALUE = "jIT6KcSZiAN"
         const val ADULT_WOMAN_PROGRAM_UID_VALUE = "uy2gU8kT1jF"
+        const val TB_PROGRAM_UID = "ur1Edk5Oe2n"
 
 
         const val CHILD_TE_TYPE_VALUE = "nEenWmSyUEp"
         const val PROGRAM_RULES_TE_TYPE_VALUE = "nEenWmSyUEp"
         const val ADULT_WOMAN_TE_TYPE_VALUE = "nEenWmSyUEp"
+        const val TB_TE_TYPE_VALUE = "nEenWmSyUEp"
         const val CHILD_TE_TYPE = "TRACKED_ENTITY_UID"
     }
 }
