@@ -4,11 +4,12 @@ import com.google.auto.value.AutoValue
 import org.dhis2.R
 import org.dhis2.data.forms.dataentry.DataEntryViewHolderTypes
 import org.dhis2.data.forms.dataentry.fields.FieldViewModel
+import org.dhis2.data.forms.dataentry.fields.common.FieldUiModel
 import org.hisp.dhis.android.core.common.ObjectStyle
 import org.hisp.dhis.android.core.common.ValueTypeDeviceRendering
 
 @AutoValue
-abstract class ScanTextViewModel : FieldViewModel() {
+abstract class ScanTextViewModel : FieldViewModel(), FieldUiModel {
 
     abstract val fieldRendering: ValueTypeDeviceRendering?
 
@@ -50,7 +51,7 @@ abstract class ScanTextViewModel : FieldViewModel() {
             )
     }
 
-    override fun setMandatory(): FieldViewModel =
+    override fun setMandatory(): FieldUiModel =
         AutoValue_ScanTextViewModel(
             uid(),
             label(),
@@ -71,7 +72,7 @@ abstract class ScanTextViewModel : FieldViewModel() {
             hint
         )
 
-    override fun withError(error: String): FieldViewModel =
+    override fun withError(error: String): FieldUiModel =
         AutoValue_ScanTextViewModel(
             uid(),
             label(),
@@ -92,7 +93,7 @@ abstract class ScanTextViewModel : FieldViewModel() {
             hint
         )
 
-    override fun withWarning(warning: String): FieldViewModel =
+    override fun withWarning(warning: String): FieldUiModel =
         AutoValue_ScanTextViewModel(
             uid(),
             label(),
@@ -113,7 +114,7 @@ abstract class ScanTextViewModel : FieldViewModel() {
             hint
         )
 
-    override fun withValue(data: String?): FieldViewModel =
+    override fun withValue(data: String?): FieldUiModel =
         AutoValue_ScanTextViewModel(
             uid(),
             label(),

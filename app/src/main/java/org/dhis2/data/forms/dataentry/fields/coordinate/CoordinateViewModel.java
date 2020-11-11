@@ -8,6 +8,7 @@ import com.google.auto.value.AutoValue;
 import org.dhis2.R;
 import org.dhis2.data.forms.dataentry.DataEntryViewHolderTypes;
 import org.dhis2.data.forms.dataentry.fields.FieldViewModel;
+import org.dhis2.data.forms.dataentry.fields.common.FieldUiModel;
 import org.hisp.dhis.android.core.common.FeatureType;
 import org.hisp.dhis.android.core.common.ObjectStyle;
 
@@ -16,7 +17,7 @@ import org.hisp.dhis.android.core.common.ObjectStyle;
  */
 
 @AutoValue
-public abstract class CoordinateViewModel extends FieldViewModel {
+public abstract class CoordinateViewModel extends FieldViewModel implements FieldUiModel {
 
     @Nullable
     public abstract FeatureType featureType();
@@ -26,25 +27,25 @@ public abstract class CoordinateViewModel extends FieldViewModel {
     }
 
     @Override
-    public FieldViewModel setMandatory() {
+    public FieldUiModel setMandatory() {
         return new AutoValue_CoordinateViewModel(uid(), label(), true, value(), programStageSection(), null, editable(), null, warning(), error(), description(), objectStyle(), null, DataEntryViewHolderTypes.COORDINATES, R.layout.custom_form_coordinate, featureType());
     }
 
     @NonNull
     @Override
-    public FieldViewModel withWarning(@NonNull String warning) {
+    public FieldUiModel withWarning(@NonNull String warning) {
         return new AutoValue_CoordinateViewModel(uid(), label(), mandatory(), value(), programStageSection(), null, editable(), null, warning, error(), description(), objectStyle(), null, DataEntryViewHolderTypes.COORDINATES, R.layout.custom_form_coordinate, featureType());
     }
 
     @NonNull
     @Override
-    public FieldViewModel withError(@NonNull String error) {
+    public FieldUiModel withError(@NonNull String error) {
         return new AutoValue_CoordinateViewModel(uid(), label(), mandatory(), value(), programStageSection(), null, editable(), null, warning(), error, description(), objectStyle(), null, DataEntryViewHolderTypes.COORDINATES, R.layout.custom_form_coordinate, featureType());
     }
 
     @NonNull
     @Override
-    public FieldViewModel withValue(String data) {
+    public FieldUiModel withValue(String data) {
         return new AutoValue_CoordinateViewModel(uid(), label(), mandatory(), data, programStageSection(), null, false, null, warning(), error(), description(), objectStyle(), null, DataEntryViewHolderTypes.COORDINATES, R.layout.custom_form_coordinate, featureType());
     }
 

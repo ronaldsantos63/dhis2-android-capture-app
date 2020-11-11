@@ -7,6 +7,7 @@ import com.google.auto.value.AutoValue;
 import org.dhis2.R;
 import org.dhis2.data.forms.dataentry.DataEntryViewHolderTypes;
 import org.dhis2.data.forms.dataentry.fields.FieldViewModel;
+import org.dhis2.data.forms.dataentry.fields.common.FieldUiModel;
 import org.hisp.dhis.android.core.common.ObjectStyle;
 
 import java.util.ArrayList;
@@ -17,7 +18,7 @@ import java.util.List;
  */
 
 @AutoValue
-public abstract class SpinnerViewModel extends FieldViewModel {
+public abstract class SpinnerViewModel extends FieldViewModel implements FieldUiModel {
 
     private List<String> optionsToHide;
     private List<String> optionGroupsToHide;
@@ -38,25 +39,25 @@ public abstract class SpinnerViewModel extends FieldViewModel {
     }
 
     @Override
-    public FieldViewModel setMandatory() {
+    public FieldUiModel setMandatory() {
         return new AutoValue_SpinnerViewModel(uid(), label(), true, value(), programStageSection(), allowFutureDate(), editable(), warning(), error(), description(), objectStyle(), null, DataEntryViewHolderTypes.OPTION_SET_SPINNER, R.layout.form_option_set, hint(), optionSet(), numberOfOptions());
     }
 
     @NonNull
     @Override
-    public FieldViewModel withError(@NonNull String error) {
+    public FieldUiModel withError(@NonNull String error) {
         return new AutoValue_SpinnerViewModel(uid(), label(), mandatory(), value(), programStageSection(), allowFutureDate(), editable(), warning(), error, description(), objectStyle(), null, DataEntryViewHolderTypes.OPTION_SET_SPINNER, R.layout.form_option_set, hint(), optionSet(), numberOfOptions());
     }
 
     @NonNull
     @Override
-    public FieldViewModel withWarning(@NonNull String warning) {
+    public FieldUiModel withWarning(@NonNull String warning) {
         return new AutoValue_SpinnerViewModel(uid(), label(), mandatory(), value(), programStageSection(), allowFutureDate(), editable(), warning, error(), description(), objectStyle(), null, DataEntryViewHolderTypes.OPTION_SET_SPINNER, R.layout.form_option_set, hint(), optionSet(), numberOfOptions());
     }
 
     @NonNull
     @Override
-    public FieldViewModel withValue(String data) {
+    public FieldUiModel withValue(String data) {
         return new AutoValue_SpinnerViewModel(uid(), label(), mandatory(), data, programStageSection(), allowFutureDate(), false, warning(), error(), description(), objectStyle(), null, DataEntryViewHolderTypes.OPTION_SET_SPINNER, R.layout.form_option_set, hint(), optionSet(), numberOfOptions());
     }
 

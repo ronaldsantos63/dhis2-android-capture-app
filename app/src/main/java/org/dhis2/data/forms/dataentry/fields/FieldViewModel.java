@@ -1,6 +1,7 @@
 package org.dhis2.data.forms.dataentry.fields;
 
 import org.dhis2.data.forms.dataentry.DataEntryViewHolderTypes;
+import org.dhis2.data.forms.dataentry.fields.common.FieldUiModel;
 import org.hisp.dhis.android.core.common.ObjectStyle;
 
 import androidx.annotation.NonNull;
@@ -38,19 +39,19 @@ public abstract class FieldViewModel {
     @Nullable
     public abstract String error();
 
-    public abstract FieldViewModel setMandatory();
+  //  public abstract FieldViewModel setMandatory();
 
-    @NonNull
-    public abstract FieldViewModel withWarning(@NonNull String warning);
+ //   @NonNull
+ //   public abstract FieldViewModel withWarning(@NonNull String warning);
 
-    @NonNull
-    public abstract FieldViewModel withError(@NonNull String error);
+ //   @NonNull
+ //   public abstract FieldViewModel withError(@NonNull String error);
 
     @Nullable
     public abstract String description();
 
-    @NonNull
-    public abstract FieldViewModel withValue(String data);
+  //  @NonNull
+  //  public abstract FieldViewModel withValue(String data);
 
     @NonNull
     public abstract FieldViewModel withEditMode(boolean isEditable);

@@ -7,6 +7,7 @@ import com.google.auto.value.AutoValue;
 import org.dhis2.R;
 import org.dhis2.data.forms.dataentry.DataEntryViewHolderTypes;
 import org.dhis2.data.forms.dataentry.fields.FieldViewModel;
+import org.dhis2.data.forms.dataentry.fields.common.FieldUiModel;
 import org.hisp.dhis.android.core.common.ObjectStyle;
 import org.hisp.dhis.android.core.common.ValueType;
 
@@ -15,7 +16,7 @@ import org.hisp.dhis.android.core.common.ValueType;
  */
 
 @AutoValue
-public abstract class DateTimeViewModel extends FieldViewModel {
+public abstract class DateTimeViewModel extends FieldViewModel implements FieldUiModel {
 
     @NonNull
     public abstract ValueType valueType();
@@ -25,28 +26,28 @@ public abstract class DateTimeViewModel extends FieldViewModel {
     }
 
     @Override
-    public FieldViewModel setMandatory() {
+    public FieldUiModel setMandatory() {
         return new AutoValue_DateTimeViewModel(uid(), label(), true, value(), programStageSection(),
                 allowFutureDate(), editable(), optionSet(), warning(), error(), description(), objectStyle(), null, provideDataEntryViewHolderType(valueType()), provideLayoutId(valueType()), valueType());
     }
 
     @NonNull
     @Override
-    public FieldViewModel withError(@NonNull String error) {
+    public FieldUiModel withError(@NonNull String error) {
         return new AutoValue_DateTimeViewModel(uid(), label(), mandatory(), value(), programStageSection(),
                 allowFutureDate(), editable(), optionSet(), warning(), error, description(), objectStyle(), null, provideDataEntryViewHolderType(valueType()), provideLayoutId(valueType()), valueType());
     }
 
     @NonNull
     @Override
-    public FieldViewModel withWarning(@NonNull String warning) {
+    public FieldUiModel withWarning(@NonNull String warning) {
         return new AutoValue_DateTimeViewModel(uid(), label(), mandatory(), value(), programStageSection(),
                 allowFutureDate(), editable(), optionSet(), warning, error(), description(), objectStyle(), null, provideDataEntryViewHolderType(valueType()), provideLayoutId(valueType()), valueType());
     }
 
     @NonNull
     @Override
-    public FieldViewModel withValue(String data) {
+    public FieldUiModel withValue(String data) {
         return new AutoValue_DateTimeViewModel(uid(), label(), mandatory(), data, programStageSection(),
                 allowFutureDate(), false, optionSet(), warning(), error(), description(), objectStyle(), null, provideDataEntryViewHolderType(valueType()), provideLayoutId(valueType()), valueType());
     }

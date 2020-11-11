@@ -7,41 +7,42 @@ import com.google.auto.value.AutoValue;
 import org.dhis2.R;
 import org.dhis2.data.forms.dataentry.DataEntryViewHolderTypes;
 import org.dhis2.data.forms.dataentry.fields.FieldViewModel;
+import org.dhis2.data.forms.dataentry.fields.common.FieldUiModel;
 import org.hisp.dhis.android.core.common.ObjectStyle;
 
 /**
  * QUADRAM. Created by ppajuelo on 19/03/2018.
  */
 @AutoValue
-public abstract class OrgUnitViewModel extends FieldViewModel {
+public abstract class OrgUnitViewModel extends FieldViewModel implements FieldUiModel {
 
     public static FieldViewModel create(String id, String label, Boolean mandatory, String value, String section, Boolean editable, String description, ObjectStyle objectStyle) {
         return new AutoValue_OrgUnitViewModel(id, label, mandatory, value, section, null, editable, null, null, null, description, objectStyle, null, DataEntryViewHolderTypes.ORG_UNIT, R.layout.form_org_unit);
     }
 
     @Override
-    public FieldViewModel setMandatory() {
+    public FieldUiModel setMandatory() {
         return new AutoValue_OrgUnitViewModel(uid(), label(), true, value(), programStageSection(),
                 allowFutureDate(), editable(), optionSet(), warning(), error(), description(), objectStyle(), null, DataEntryViewHolderTypes.ORG_UNIT, R.layout.form_org_unit);
     }
 
     @NonNull
     @Override
-    public FieldViewModel withError(@NonNull String error) {
+    public FieldUiModel withError(@NonNull String error) {
         return new AutoValue_OrgUnitViewModel(uid(), label(), mandatory(), value(), programStageSection(),
                 allowFutureDate(), editable(), optionSet(), warning(), error, description(), objectStyle(), null, DataEntryViewHolderTypes.ORG_UNIT, R.layout.form_org_unit);
     }
 
     @NonNull
     @Override
-    public FieldViewModel withWarning(@NonNull String warning) {
+    public FieldUiModel withWarning(@NonNull String warning) {
         return new AutoValue_OrgUnitViewModel(uid(), label(), mandatory(), value(), programStageSection(),
                 allowFutureDate(), editable(), optionSet(), warning, error(), description(), objectStyle(), null, DataEntryViewHolderTypes.ORG_UNIT, R.layout.form_org_unit);
     }
 
     @NonNull
     @Override
-    public FieldViewModel withValue(String data) {
+    public FieldUiModel withValue(String data) {
         return new AutoValue_OrgUnitViewModel(uid(), label(), mandatory(), data, programStageSection(),
                 allowFutureDate(), false, optionSet(), warning(), error(), description(), objectStyle(), null, DataEntryViewHolderTypes.ORG_UNIT, R.layout.form_org_unit);
     }

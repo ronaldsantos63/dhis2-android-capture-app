@@ -1,6 +1,7 @@
 package org.dhis2.utils
 
 import org.dhis2.data.forms.dataentry.fields.FieldViewModel
+import org.dhis2.data.forms.dataentry.fields.common.FieldUiModel
 import org.dhis2.data.forms.dataentry.fields.display.DisplayViewModel
 import org.hisp.dhis.android.core.D2
 import org.hisp.dhis.android.core.program.ProgramStage
@@ -23,10 +24,10 @@ import org.hisp.dhis.rules.models.RuleEffect
 
 class RulesUtilsProviderImpl(val d2: D2) : RulesUtilsProvider {
 
-    private var currentFieldViewModels: HashMap<String, FieldViewModel>? = null
+    private var currentFieldViewModels: HashMap<String, FieldUiModel>? = null
 
     override fun applyRuleEffects(
-        fieldViewModels: MutableMap<String, FieldViewModel>,
+        fieldViewModels: MutableMap<String, FieldUiModel>,
         calcResult: Result<RuleEffect>,
         rulesActionCallbacks: RulesActionCallbacks
     ) {
@@ -66,11 +67,6 @@ class RulesUtilsProviderImpl(val d2: D2) : RulesUtilsProvider {
                 is RuleActionAssign -> assign(
                     it.ruleAction() as RuleActionAssign,
                     it,
-                    fieldViewModels,
-                    rulesActionCallbacks
-                )
-                is RuleActionCreateEvent -> createEvent(
-                    it.ruleAction() as RuleActionCreateEvent,
                     fieldViewModels,
                     rulesActionCallbacks
                 )
@@ -128,7 +124,7 @@ class RulesUtilsProviderImpl(val d2: D2) : RulesUtilsProvider {
 
     private fun showWarning(
         showWarning: RuleActionShowWarning,
-        fieldViewModels: MutableMap<String, FieldViewModel>,
+        fieldViewModels: MutableMap<String, FieldUiModel>,
         data: String
     ) {
         val model = fieldViewModels[showWarning.field()]
@@ -140,7 +136,7 @@ class RulesUtilsProviderImpl(val d2: D2) : RulesUtilsProvider {
 
     private fun showError(
         showError: RuleActionShowError,
-        fieldViewModels: MutableMap<String, FieldViewModel>,
+        fieldViewModels: MutableMap<String, FieldUiModel>,
         rulesActionCallbacks: RulesActionCallbacks,
         effectData: String
     ) {
@@ -156,7 +152,7 @@ class RulesUtilsProviderImpl(val d2: D2) : RulesUtilsProvider {
 
     private fun hideField(
         hideField: RuleActionHideField,
-        fieldViewModels: MutableMap<String, FieldViewModel>,
+        fieldViewModels: MutableMap<String, FieldUiModel>,
         rulesActionCallbacks: RulesActionCallbacks
     ) {
         fieldViewModels.remove(hideField.field())
@@ -166,7 +162,7 @@ class RulesUtilsProviderImpl(val d2: D2) : RulesUtilsProvider {
     private fun displayText(
         displayText: RuleActionDisplayText,
         ruleEffect: RuleEffect,
-        fieldViewModels: MutableMap<String, FieldViewModel>
+        fieldViewModels: MutableMap<String, FieldUiModel>
     ) {
         val uid = displayText.content()
 
@@ -180,7 +176,7 @@ class RulesUtilsProviderImpl(val d2: D2) : RulesUtilsProvider {
     private fun displayKeyValuePair(
         displayKeyValuePair: RuleActionDisplayKeyValuePair,
         ruleEffect: RuleEffect,
-        fieldViewModels: MutableMap<String, FieldViewModel>,
+        fieldViewModels: MutableMap<String, FieldUiModel>,
         rulesActionCallbacks: RulesActionCallbacks
     ) {
         val uid = displayKeyValuePair.content()
@@ -203,10 +199,10 @@ class RulesUtilsProviderImpl(val d2: D2) : RulesUtilsProvider {
     private fun assign(
         assign: RuleActionAssign,
         ruleEffect: RuleEffect,
-        fieldViewModels: MutableMap<String, FieldViewModel>,
+        fieldViewModels: MutableMap<String, FieldUiModel>,
         rulesActionCallbacks: RulesActionCallbacks
     ) {
-        if (fieldViewModels[assign.field()] == null) {
+   /*     if (fieldViewModels[assign.field()] == null) {
             rulesActionCallbacks.setCalculatedValue(assign.content(), ruleEffect.data())
             rulesActionCallbacks.save(assign.field(), ruleEffect.data())
         } else {
@@ -238,20 +234,12 @@ class RulesUtilsProviderImpl(val d2: D2) : RulesUtilsProvider {
                 assign.field(),
                 fieldViewModels[assign.field()]!!.withValue(valueToShow)
             )!!.withEditMode(false)
-        }
-    }
-
-    private fun createEvent(
-        createEvent: RuleActionCreateEvent,
-        fieldViewModels: MutableMap<String, FieldViewModel>,
-        rulesActionCallbacks: RulesActionCallbacks
-    ) {
-        // TODO: Create Event
+        } */
     }
 
     private fun setMandatory(
         mandatoryField: RuleActionSetMandatoryField,
-        fieldViewModels: MutableMap<String, FieldViewModel>
+        fieldViewModels: MutableMap<String, FieldUiModel>
     ) {
         val model = fieldViewModels[mandatoryField.field()]
         if (model != null) {
@@ -262,7 +250,7 @@ class RulesUtilsProviderImpl(val d2: D2) : RulesUtilsProvider {
     private fun warningOnCompletion(
         warningOnCompletion: RuleActionWarningOnCompletion,
         rulesActionCallbacks: RulesActionCallbacks,
-        fieldViewModels: MutableMap<String, FieldViewModel>,
+        fieldViewModels: MutableMap<String, FieldUiModel>,
         data: String
     ) {
         val model = fieldViewModels[warningOnCompletion.field()]
@@ -277,7 +265,7 @@ class RulesUtilsProviderImpl(val d2: D2) : RulesUtilsProvider {
     private fun errorOnCompletion(
         errorOnCompletion: RuleActionErrorOnCompletion,
         rulesActionCallbacks: RulesActionCallbacks,
-        fieldViewModels: MutableMap<String, FieldViewModel>,
+        fieldViewModels: MutableMap<String, FieldUiModel>,
         data: String
     ) {
         val model = fieldViewModels[errorOnCompletion.field()]

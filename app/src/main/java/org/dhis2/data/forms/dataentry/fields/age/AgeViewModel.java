@@ -5,6 +5,7 @@ import com.google.auto.value.AutoValue;
 import org.dhis2.R;
 import org.dhis2.data.forms.dataentry.DataEntryViewHolderTypes;
 import org.dhis2.data.forms.dataentry.fields.FieldViewModel;
+import org.dhis2.data.forms.dataentry.fields.common.FieldUiModel;
 import org.hisp.dhis.android.core.common.ObjectStyle;
 
 import androidx.annotation.NonNull;
@@ -15,7 +16,7 @@ import androidx.annotation.Nullable;
  */
 
 @AutoValue
-public abstract class AgeViewModel extends FieldViewModel {
+public abstract class AgeViewModel extends FieldViewModel implements FieldUiModel {
 
     @NonNull
     public abstract Boolean mandatory();
@@ -28,25 +29,25 @@ public abstract class AgeViewModel extends FieldViewModel {
     }
 
     @Override
-    public FieldViewModel setMandatory() {
+    public FieldUiModel setMandatory() {
         return new AutoValue_AgeViewModel(uid(), label(), programStageSection(), allowFutureDate(), editable(), optionSet(), warning(), error(), description(), objectStyle(), null, DataEntryViewHolderTypes.AGE_VIEW, R.layout.form_age_custom, true, value());
     }
 
     @NonNull
     @Override
-    public FieldViewModel withError(@NonNull String error) {
+    public FieldUiModel withError(@NonNull String error) {
         return new AutoValue_AgeViewModel(uid(), label(), programStageSection(), allowFutureDate(), editable(), optionSet(), warning(), error, description(), objectStyle(), null, DataEntryViewHolderTypes.AGE_VIEW, R.layout.form_age_custom, mandatory(), value());
     }
 
     @NonNull
     @Override
-    public FieldViewModel withWarning(@NonNull String warning) {
+    public FieldUiModel withWarning(@NonNull String warning) {
         return new AutoValue_AgeViewModel(uid(), label(), programStageSection(), allowFutureDate(), editable(), optionSet(), warning, error(), description(), objectStyle(), null, DataEntryViewHolderTypes.AGE_VIEW, R.layout.form_age_custom, mandatory(), value());
     }
 
     @NonNull
     @Override
-    public FieldViewModel withValue(String data) {
+    public FieldUiModel withValue(String data) {
         return new AutoValue_AgeViewModel(uid(), label(), programStageSection(), allowFutureDate(), false, optionSet(), warning(), error(), description(), objectStyle(), null, DataEntryViewHolderTypes.AGE_VIEW, R.layout.form_age_custom, mandatory(), data);
     }
 

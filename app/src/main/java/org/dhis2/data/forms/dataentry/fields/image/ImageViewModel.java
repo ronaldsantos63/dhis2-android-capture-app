@@ -7,10 +7,11 @@ import com.google.auto.value.AutoValue;
 import org.dhis2.R;
 import org.dhis2.data.forms.dataentry.DataEntryViewHolderTypes;
 import org.dhis2.data.forms.dataentry.fields.FieldViewModel;
+import org.dhis2.data.forms.dataentry.fields.common.FieldUiModel;
 import org.hisp.dhis.android.core.common.ObjectStyle;
 
 @AutoValue
-public abstract class ImageViewModel extends FieldViewModel {
+public abstract class ImageViewModel extends FieldViewModel implements FieldUiModel {
 
     public static final String NAME_CODE_DELIMITATOR = "_op_";
 
@@ -19,28 +20,28 @@ public abstract class ImageViewModel extends FieldViewModel {
     }
 
     @Override
-    public FieldViewModel setMandatory() {
+    public FieldUiModel setMandatory() {
         return new AutoValue_ImageViewModel(uid(), label(), true, value(), programStageSection(),
                 allowFutureDate(), editable(), optionSet(), warning(), error(), description(), objectStyle(), null, DataEntryViewHolderTypes.IMAGE, R.layout.form_image);
     }
 
     @NonNull
     @Override
-    public FieldViewModel withError(@NonNull String error) {
+    public FieldUiModel withError(@NonNull String error) {
         return new AutoValue_ImageViewModel(uid(), label(), mandatory(), value(), programStageSection(),
                 allowFutureDate(), editable(), optionSet(), warning(), error, description(), objectStyle(), null, DataEntryViewHolderTypes.IMAGE, R.layout.form_image);
     }
 
     @NonNull
     @Override
-    public FieldViewModel withWarning(@NonNull String warning) {
+    public FieldUiModel withWarning(@NonNull String warning) {
         return new AutoValue_ImageViewModel(uid(), label(), mandatory(), value(), programStageSection(),
                 allowFutureDate(), editable(), optionSet(), warning, error(), description(), objectStyle(), null, DataEntryViewHolderTypes.IMAGE, R.layout.form_image);
     }
 
     @NonNull
     @Override
-    public FieldViewModel withValue(String data) {
+    public FieldUiModel withValue(String data) {
         return new AutoValue_ImageViewModel(uid(), label(), mandatory(), data, programStageSection(),
                 allowFutureDate(), false, optionSet(), warning(), error(), description(), objectStyle(), null, DataEntryViewHolderTypes.IMAGE, R.layout.form_image);
     }

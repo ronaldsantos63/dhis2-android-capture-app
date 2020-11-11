@@ -8,13 +8,14 @@ import com.google.auto.value.AutoValue;
 import org.dhis2.R;
 import org.dhis2.data.forms.dataentry.DataEntryViewHolderTypes;
 import org.dhis2.data.forms.dataentry.fields.FieldViewModel;
+import org.dhis2.data.forms.dataentry.fields.common.FieldUiModel;
 import org.hisp.dhis.android.core.common.ObjectStyle;
 import org.hisp.dhis.android.core.program.ProgramStageSectionRenderingType;
 
 import java.util.Objects;
 
 @AutoValue
-public abstract class SectionViewModel extends FieldViewModel {
+public abstract class SectionViewModel extends FieldViewModel implements FieldUiModel {
 
     public static final String CLOSING_SECTION_UID = "closing_section";
 
@@ -89,7 +90,7 @@ public abstract class SectionViewModel extends FieldViewModel {
     }
 
     @Override
-    public FieldViewModel setMandatory() {
+    public FieldUiModel setMandatory() {
         return this;
     }
 
@@ -179,19 +180,19 @@ public abstract class SectionViewModel extends FieldViewModel {
 
     @NonNull
     @Override
-    public FieldViewModel withError(@NonNull String error) {
+    public FieldUiModel withError(@NonNull String error) {
         return this;
     }
 
     @NonNull
     @Override
-    public FieldViewModel withWarning(@NonNull String warning) {
+    public FieldUiModel withWarning(@NonNull String warning) {
         return this;
     }
 
     @NonNull
     @Override
-    public FieldViewModel withValue(String data) {
+    public FieldUiModel withValue(String data) {
         return this;
     }
 

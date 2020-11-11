@@ -10,16 +10,19 @@ import com.google.auto.value.AutoValue;
 import org.dhis2.R;
 import org.dhis2.data.forms.dataentry.DataEntryViewHolderTypes;
 import org.dhis2.data.forms.dataentry.fields.FieldViewModel;
+import org.dhis2.data.forms.dataentry.fields.common.FieldUiModel;
 import org.hisp.dhis.android.core.common.ObjectStyle;
 import org.hisp.dhis.android.core.common.ValueType;
 import org.hisp.dhis.android.core.common.ValueTypeDeviceRendering;
+
+import retrofit2.http.Field;
 
 /**
  * QUADRAM. Created by frodriguez on 1/24/2018.
  */
 
 @AutoValue
-public abstract class EditTextViewModel extends EditTextModel<String> {
+public abstract class EditTextViewModel extends EditTextModel<String> implements FieldUiModel {
 
     @Nullable
     public abstract ValueTypeDeviceRendering fieldRendering();
@@ -54,7 +57,7 @@ public abstract class EditTextViewModel extends EditTextModel<String> {
 
     @NonNull
     @Override
-    public FieldViewModel setMandatory() {
+    public FieldUiModel setMandatory() {
         return new AutoValue_EditTextViewModel(uid(), label(), true,
                 value(), programStageSection(), null, editable(), null,
                 description(), objectStyle(), fieldMask(), DataEntryViewHolderTypes.EDIT_TEXT, R.layout.form_edit_text_custom, hint(), maxLines(), InputType.TYPE_CLASS_TEXT, valueType(), warning(), error(),
@@ -63,7 +66,7 @@ public abstract class EditTextViewModel extends EditTextModel<String> {
 
     @NonNull
     @Override
-    public FieldViewModel withValue(String data) {
+    public FieldUiModel withValue(String data) {
         return new AutoValue_EditTextViewModel(uid(), label(), mandatory(),
                 data, programStageSection(), null, false, null,
                 description(), objectStyle(), fieldMask(), DataEntryViewHolderTypes.EDIT_TEXT, R.layout.form_edit_text_custom, hint(), maxLines(), InputType.TYPE_CLASS_TEXT, valueType(), warning(), error(),
