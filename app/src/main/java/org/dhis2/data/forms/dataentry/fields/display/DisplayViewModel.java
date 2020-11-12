@@ -43,7 +43,7 @@ public abstract class DisplayViewModel extends FieldViewModel implements FieldUi
 
     @NonNull
     @Override
-    public FieldViewModel withEditMode(boolean isEditable) {
+    public FieldUiModel withEditMode(boolean isEditable) {
         return new AutoValue_DisplayViewModel(uid(), label(), mandatory(), value(), null, null, isEditable, null, warning(), error(), description(), objectStyle(), null, DataEntryViewHolderTypes.DISPLAY, R.layout.item_indicator);
     }
 }

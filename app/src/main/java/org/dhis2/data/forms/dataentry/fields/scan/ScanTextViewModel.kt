@@ -29,7 +29,7 @@ abstract class ScanTextViewModel : FieldViewModel(), FieldUiModel {
             objectStyle: ObjectStyle?,
             fieldRendering: ValueTypeDeviceRendering?,
             hint: String?
-        ): FieldViewModel =
+        ): FieldUiModel =
             AutoValue_ScanTextViewModel(
                 id,
                 label,
@@ -135,7 +135,7 @@ abstract class ScanTextViewModel : FieldViewModel(), FieldUiModel {
             hint
         )
 
-    override fun withEditMode(isEditable: Boolean): FieldViewModel =
+    override fun withEditMode(isEditable: Boolean): FieldUiModel =
         AutoValue_ScanTextViewModel(
             uid(),
             label(),

@@ -14,7 +14,7 @@ import retrofit2.http.Field;
 
 @AutoValue
 public abstract class UnsupportedViewModel extends FieldViewModel implements FieldUiModel {
-    public static FieldViewModel create(String id, String label, Boolean mandatory, String value, String section, Boolean editable, String description, ObjectStyle objectStyle) {
+    public static FieldUiModel create(String id, String label, Boolean mandatory, String value, String section, Boolean editable, String description, ObjectStyle objectStyle) {
         return new AutoValue_UnsupportedViewModel(id, label, false, value, section, null, false, null, null, null, description, objectStyle, null, DataEntryViewHolderTypes.UNSUPPORTED, R.layout.form_unsupported_custom);
     }
 
@@ -43,7 +43,7 @@ public abstract class UnsupportedViewModel extends FieldViewModel implements Fie
 
     @NonNull
     @Override
-    public FieldViewModel withEditMode(boolean isEditable) {
+    public FieldUiModel withEditMode(boolean isEditable) {
         return new AutoValue_UnsupportedViewModel(uid(), label(), false, value(), programStageSection(), allowFutureDate(), false, optionSet(), warning(), error(), description(), objectStyle(), null, DataEntryViewHolderTypes.UNSUPPORTED, R.layout.form_unsupported_custom);
     }
 }

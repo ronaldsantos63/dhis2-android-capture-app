@@ -7,5 +7,6 @@ interface FieldUiModel{
     fun withValue(data: String?): FieldUiModel
     fun withWarning(warning: String): FieldUiModel
     fun withError(error: String): FieldUiModel
+    fun withEditMode(isEditable: Boolean): FieldUiModel
     fun setMandatory(): FieldUiModel
 }

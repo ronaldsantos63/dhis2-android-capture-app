@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import org.dhis2.data.forms.dataentry.fields.age.AgeViewModel;
+import org.dhis2.data.forms.dataentry.fields.common.FieldUiModel;
 import org.dhis2.data.forms.dataentry.fields.coordinate.CoordinateViewModel;
 import org.dhis2.data.forms.dataentry.fields.datetime.DateTimeViewModel;
 import org.dhis2.data.forms.dataentry.fields.edittext.EditTextViewModel;
@@ -52,10 +53,10 @@ public final class FieldViewModelFactoryImpl implements FieldViewModelFactory {
             "PMD.CyclomaticComplexity",
             "PMD.StdCyclomaticComplexity"
     })
-    public FieldViewModel create(@NonNull String id, @NonNull String label, @NonNull ValueType type,
-                                 @NonNull Boolean mandatory, @Nullable String optionSet, @Nullable String value,
-                                 @Nullable String section, @Nullable Boolean allowFutureDates, @NonNull Boolean editable, @Nullable ProgramStageSectionRenderingType renderingType,
-                                 @Nullable String description, @Nullable ValueTypeDeviceRendering fieldRendering, @Nullable Integer optionCount, ObjectStyle objectStyle, @Nullable String fieldMask) {
+    public FieldUiModel create(@NonNull String id, @NonNull String label, @NonNull ValueType type,
+                               @NonNull Boolean mandatory, @Nullable String optionSet, @Nullable String value,
+                               @Nullable String section, @Nullable Boolean allowFutureDates, @NonNull Boolean editable, @Nullable ProgramStageSectionRenderingType renderingType,
+                               @Nullable String description, @Nullable ValueTypeDeviceRendering fieldRendering, @Nullable Integer optionCount, ObjectStyle objectStyle, @Nullable String fieldMask) {
         isNull(type, "type must be supplied");
         if (DhisTextUtils.Companion.isNotEmpty(optionSet)) {
             if (renderingType == null || renderingType == ProgramStageSectionRenderingType.LISTING) {

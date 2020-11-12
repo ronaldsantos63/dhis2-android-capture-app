@@ -75,7 +75,7 @@ public abstract class EditTextViewModel extends EditTextModel<String> implements
 
     @NonNull
     @Override
-    public FieldViewModel withEditMode(boolean isEditable) {
+    public FieldUiModel withEditMode(boolean isEditable) {
         return new AutoValue_EditTextViewModel(uid(), label(), mandatory(),
                 value(), programStageSection(), null, isEditable, null,
                 description(), objectStyle(), fieldMask(), DataEntryViewHolderTypes.EDIT_TEXT, R.layout.form_edit_text_custom, hint(), maxLines(), InputType.TYPE_CLASS_TEXT, valueType(), warning(), error(),

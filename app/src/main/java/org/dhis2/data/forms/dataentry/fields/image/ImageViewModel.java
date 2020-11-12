@@ -48,7 +48,7 @@ public abstract class ImageViewModel extends FieldViewModel implements FieldUiMo
 
     @NonNull
     @Override
-    public FieldViewModel withEditMode(boolean isEditable) {
+    public FieldUiModel withEditMode(boolean isEditable) {
         return new AutoValue_ImageViewModel(uid(), label(), mandatory(), value(), programStageSection(),
                 allowFutureDate(), isEditable, optionSet(), warning(), error(), description(), objectStyle(), null, DataEntryViewHolderTypes.IMAGE, R.layout.form_image);
     }

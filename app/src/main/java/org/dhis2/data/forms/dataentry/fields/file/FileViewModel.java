@@ -46,7 +46,7 @@ public abstract class FileViewModel extends FieldViewModel implements FieldUiMod
 
     @NonNull
     @Override
-    public FieldViewModel withEditMode(boolean isEditable) {
+    public FieldUiModel withEditMode(boolean isEditable) {
         return new AutoValue_FileViewModel(uid(), label(), mandatory(), value(), programStageSection(),
                 allowFutureDate(), isEditable, optionSet(), warning(), error(), description(), objectStyle(), null, DataEntryViewHolderTypes.BUTTON, R.layout.form_button);
     }

@@ -63,7 +63,7 @@ public abstract class SpinnerViewModel extends FieldViewModel implements FieldUi
 
     @NonNull
     @Override
-    public FieldViewModel withEditMode(boolean isEditable) {
+    public FieldUiModel withEditMode(boolean isEditable) {
         return new AutoValue_SpinnerViewModel(uid(), label(), mandatory(), value(), programStageSection(), allowFutureDate(), isEditable, warning(), error(), description(), objectStyle(), null, DataEntryViewHolderTypes.OPTION_SET_SPINNER, R.layout.form_option_set, hint(), optionSet(), numberOfOptions());
     }
 

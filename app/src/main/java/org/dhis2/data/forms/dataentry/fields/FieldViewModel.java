@@ -53,8 +53,8 @@ public abstract class FieldViewModel {
   //  @NonNull
   //  public abstract FieldViewModel withValue(String data);
 
-    @NonNull
-    public abstract FieldViewModel withEditMode(boolean isEditable);
+ //   @NonNull
+ //   public abstract FieldViewModel withEditMode(boolean isEditable);
 
     @NonNull
     public abstract ObjectStyle objectStyle();

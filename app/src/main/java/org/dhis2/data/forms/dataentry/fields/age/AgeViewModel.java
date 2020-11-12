@@ -24,7 +24,7 @@ public abstract class AgeViewModel extends FieldViewModel implements FieldUiMode
     @Nullable
     public abstract String value();
 
-    public static FieldViewModel create(String id, String label, Boolean mandatory, String value, String section, Boolean editable, String description, ObjectStyle objectStyle) {
+    public static FieldUiModel create(String id, String label, Boolean mandatory, String value, String section, Boolean editable, String description, ObjectStyle objectStyle) {
         return new AutoValue_AgeViewModel(id, label, section, null, editable, null, null, null, description, objectStyle, null, DataEntryViewHolderTypes.AGE_VIEW, R.layout.form_age_custom, mandatory, value);
     }
 
@@ -53,7 +53,7 @@ public abstract class AgeViewModel extends FieldViewModel implements FieldUiMode
 
     @NonNull
     @Override
-    public FieldViewModel withEditMode(boolean isEditable) {
+    public FieldUiModel withEditMode(boolean isEditable) {
         return new AutoValue_AgeViewModel(uid(), label(), programStageSection(), allowFutureDate(), isEditable, optionSet(), warning(), error(), description(), objectStyle(), null, DataEntryViewHolderTypes.AGE_VIEW, R.layout.form_age_custom, mandatory(), value());
     }
 }

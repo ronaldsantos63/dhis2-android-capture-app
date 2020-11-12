@@ -16,7 +16,7 @@ import org.hisp.dhis.android.core.common.ObjectStyle;
 @AutoValue
 public abstract class OrgUnitViewModel extends FieldViewModel implements FieldUiModel {
 
-    public static FieldViewModel create(String id, String label, Boolean mandatory, String value, String section, Boolean editable, String description, ObjectStyle objectStyle) {
+    public static FieldUiModel create(String id, String label, Boolean mandatory, String value, String section, Boolean editable, String description, ObjectStyle objectStyle) {
         return new AutoValue_OrgUnitViewModel(id, label, mandatory, value, section, null, editable, null, null, null, description, objectStyle, null, DataEntryViewHolderTypes.ORG_UNIT, R.layout.form_org_unit);
     }
 
@@ -49,7 +49,7 @@ public abstract class OrgUnitViewModel extends FieldViewModel implements FieldUi
 
     @NonNull
     @Override
-    public FieldViewModel withEditMode(boolean isEditable) {
+    public FieldUiModel withEditMode(boolean isEditable) {
         return new AutoValue_OrgUnitViewModel(uid(), label(), mandatory(), value(), programStageSection(),
                 allowFutureDate(), isEditable, optionSet(), warning(), error(), description(), objectStyle(), null, DataEntryViewHolderTypes.ORG_UNIT, R.layout.form_org_unit);
     }

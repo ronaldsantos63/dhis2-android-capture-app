@@ -89,7 +89,7 @@ public abstract class RadioButtonViewModel extends FieldViewModel implements Fie
 
     @NonNull
     @Override
-    public FieldViewModel withEditMode(boolean isEditable) {
+    public FieldUiModel withEditMode(boolean isEditable) {
         return new AutoValue_RadioButtonViewModel(uid(), label(), value(), programStageSection(), allowFutureDate(), isEditable, optionSet(), warning(), error(), description(), objectStyle(), null, DataEntryViewHolderTypes.YES_NO, R.layout.form_yes_no, mandatory(), valueType(), renderingType());
     }
 }

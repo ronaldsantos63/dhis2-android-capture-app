@@ -4,11 +4,13 @@ import java.util.ArrayList
 import java.util.HashMap
 import org.dhis2.data.forms.FormSectionViewModel
 import org.dhis2.data.forms.dataentry.fields.FieldViewModel
+import org.dhis2.data.forms.dataentry.fields.common.FieldUiModel
 import org.dhis2.data.forms.dataentry.fields.display.DisplayViewModel
 import org.dhis2.data.forms.dataentry.fields.image.ImageViewModel
 import org.dhis2.data.forms.dataentry.fields.section.SectionViewModel
 import org.dhis2.data.forms.dataentry.fields.unsupported.UnsupportedViewModel
 import org.dhis2.utils.DhisTextUtils.Companion.isEmpty
+import org.hisp.dhis.android.core.arch.api.fields.internal.Field
 
 const val DISPLAY_FIELD_KEY = "DISPLAY_FIELD_KEY"
 
@@ -19,13 +21,13 @@ class EventFieldMapper(
     var totalFields: Int = 0
     var unsupportedFields: Int = 0
     private lateinit var optionSets: MutableList<String?>
-    private lateinit var fieldMap: MutableMap<String?, MutableList<FieldViewModel>>
+    private lateinit var fieldMap: MutableMap<String?, MutableList<FieldUiModel>>
     private lateinit var eventSectionModels: MutableList<EventSectionModel>
     private lateinit var finalFieldList: MutableList<FieldViewModel>
     private lateinit var finalFields: MutableMap<String, Boolean>
 
     fun map(
-        fields: MutableList<FieldViewModel>,
+        fields: MutableList<FieldUiModel>,
         sectionList: MutableList<FormSectionViewModel>,
         sectionsToHide: MutableList<String>,
         currentSection: String,
@@ -89,11 +91,11 @@ class EventFieldMapper(
     }
 
     private fun setFieldMap(
-        fields: List<FieldViewModel>,
+        fields: List<FieldUiModel>,
         sectionList: List<FormSectionViewModel>,
         sectionsToHide: List<String?>,
         showMandatoryErrors: Boolean,
-        emptyMandatoryFields: MutableMap<String, FieldViewModel>
+        emptyMandatoryFields: MutableMap<String, FieldUiModel>
     ) {
         fields.forEach { field ->
             val fieldSection = getFieldSection(field)
@@ -127,7 +129,7 @@ class EventFieldMapper(
         }
     }
 
-    private fun getFieldSection(field: FieldViewModel): String {
+    private fun getFieldSection(field: FieldUiModel): String {
         return if (field is DisplayViewModel) {
             DISPLAY_FIELD_KEY
         } else {
@@ -143,7 +145,7 @@ class EventFieldMapper(
     }
 
     private fun handleSection(
-        fields: List<FieldViewModel>,
+        fields: List<FieldUiModel>,
         sectionList: List<FormSectionViewModel>,
         sectionsToHide: List<String?>,
         sectionModel: FormSectionViewModel,
@@ -217,7 +219,7 @@ class EventFieldMapper(
     }
 
     private fun handleSingleSection(
-        fields: List<FieldViewModel>,
+        fields: List<FieldUiModel>,
         sectionModel: FormSectionViewModel
     ) {
         for (fieldViewModel in fields) {

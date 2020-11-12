@@ -21,7 +21,7 @@ public abstract class DateTimeViewModel extends FieldViewModel implements FieldU
     @NonNull
     public abstract ValueType valueType();
 
-    public static FieldViewModel create(String id, String label, Boolean mandatory, ValueType type, String value, String section, Boolean allowFutureDates, Boolean editable, String description, ObjectStyle objectStyle) {
+    public static FieldUiModel create(String id, String label, Boolean mandatory, ValueType type, String value, String section, Boolean allowFutureDates, Boolean editable, String description, ObjectStyle objectStyle) {
         return new AutoValue_DateTimeViewModel(id, label, mandatory, value, section, allowFutureDates, editable, null, null, null, description, objectStyle, null, provideDataEntryViewHolderType(type), provideLayoutId(type), type);
     }
 
@@ -54,7 +54,7 @@ public abstract class DateTimeViewModel extends FieldViewModel implements FieldU
 
     @NonNull
     @Override
-    public FieldViewModel withEditMode(boolean isEditable) {
+    public FieldUiModel withEditMode(boolean isEditable) {
         return new AutoValue_DateTimeViewModel(uid(), label(), mandatory(), value(), programStageSection(),
                 allowFutureDate(), isEditable, optionSet(), warning(), error(), description(), objectStyle(), null, provideDataEntryViewHolderType(valueType()), provideLayoutId(valueType()), valueType());
     }

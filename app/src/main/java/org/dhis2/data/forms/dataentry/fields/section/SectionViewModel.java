@@ -198,7 +198,7 @@ public abstract class SectionViewModel extends FieldViewModel implements FieldUi
 
     @NonNull
     @Override
-    public FieldViewModel withEditMode(boolean isEditable) {
+    public FieldUiModel withEditMode(boolean isEditable) {
         return this;
     }
 

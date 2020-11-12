@@ -22,7 +22,7 @@ public abstract class CoordinateViewModel extends FieldViewModel implements Fiel
     @Nullable
     public abstract FeatureType featureType();
 
-    public static FieldViewModel create(String id, String label, Boolean mandatory, String value, String section, Boolean editable, String description, ObjectStyle objectStyle, FeatureType featureType) {
+    public static FieldUiModel create(String id, String label, Boolean mandatory, String value, String section, Boolean editable, String description, ObjectStyle objectStyle, FeatureType featureType) {
         return new AutoValue_CoordinateViewModel(id, label, mandatory, value, section, null, editable, null, null, null, description, objectStyle, null, DataEntryViewHolderTypes.COORDINATES, R.layout.custom_form_coordinate, featureType);
     }
 
@@ -51,7 +51,7 @@ public abstract class CoordinateViewModel extends FieldViewModel implements Fiel
 
     @NonNull
     @Override
-    public FieldViewModel withEditMode(boolean isEditable) {
+    public FieldUiModel withEditMode(boolean isEditable) {
         return new AutoValue_CoordinateViewModel(uid(), label(), mandatory(), value(), programStageSection(), null, isEditable, null, warning(), error(), description(), objectStyle(), null, DataEntryViewHolderTypes.COORDINATES, R.layout.custom_form_coordinate, featureType());
     }
 }
