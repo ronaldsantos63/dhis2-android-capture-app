@@ -116,6 +116,10 @@ In the Android App, the color will be rendered as background color for programs 
 >
 > Render type for sections will first be available in the Android app, followed in future releases by the new web-based Capture App UI.
 
+If a metadata object has an icon, but it has been removed from the available ones, a DHIS2 logo will be displayed.
+
+![](resources/images/image143.jpeg){ width=25%}
+
 ## Calendar
 
  <!-- DHIS2-SECTION-ID:visual_calendar -->
@@ -159,6 +163,7 @@ The available rendering options have been expanded to include horizontal and ver
 > 
 > ![](resources/images/options_no_search.png){ width=25% } ![](resources/images/options_search.png){ width=60% }
 
+Option sets with value type different from "text" do not support the rendering yet.
 
 ### QR and Barcodes
 
@@ -170,3 +175,7 @@ Data elements or attributes or type text can be also configured as QR or barcode
 ![](resources/images/image119.png){ width=20%}
 ![](resources/images/image120.png){ width=20%}
 ![](resources/images/image121.png){ width=20%}
+
+User is now able to manually enter information of barcodes and QR codes fields.
+
+![](resources/images/image144.jpg){ width=20%}

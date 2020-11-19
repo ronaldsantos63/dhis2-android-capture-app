@@ -12,8 +12,8 @@
 
 User must enter the event and then click the complete icon in the bottom right corner.
 
-![](resources/images/image37.jpg){ width=25%}
-![](resources/images/image74.png){ width=25%}
+![](resources/images/image37.JPG){ width=25%}
+![](resources/images/image74.JPG){ width=25%}
 
 Two options will be presented:
 
@@ -25,7 +25,7 @@ Two options will be presented:
 
 > **Note**
 >
-> To verify if an event is completed look at the color of the box, it must be grey; and also have the label 'Event Completed' on it. It applies the same legend set than the web UI.
+> To verify if an event is completed look at the event icon, it must be a green checked box ![](resources/images/image140.JPG){ width=25%}
 
 > **Note**
 >
@@ -38,9 +38,6 @@ Two options will be presented:
 The percentage of data completed in each event is shown in the top right corner of an event when it is opened after first registration.
 
 ![](resources/images/image80.png){ width=25%}
-
-> **Note**
->
 
 ### Sections Navigation
 
@@ -57,7 +54,12 @@ The display for sections has been redesigned for a more simple user experience. 
 
 The app will now list the name of the mandatory fields missing when the user tries to complete an event or enrollment. The sections containing the missing fields will be highlighted to help the user find the missing fields.
 
-![](resources/images/image117.png){ width=25%}
+![](resources/images/image117.JPG){ width=25%}
+
+The app will also mark the section and the specific fields missing.
+
+![](resources/images/image138.PNG){ width=25%}
+![](resources/images/image139.JPG){ width=25%}
 
 ### Event Notes
 
@@ -111,6 +113,22 @@ In tracker, the user can see relationships on a map by tapping the map icon on t
 
 ![](resources/images/image132.png){ width=25%}
 ![](resources/images/image127.png){ width=25%}
+
+### Event cards
+
+The new event card design includes:
+
+* Event date
+* Name of the stage
+* Organisation Unit
+* Display in reports Data Elements
+  * There will be an arrow to display the full list (only data elements with display In Reports option)
+* Event status (icons)
+* Sync status
+
+![](resources/images/image141.jpg){ width=25%}
+![](resources/images/image142.jpg){ width=25%}
+
 
 ## Program with registration in Android
 
@@ -309,7 +327,7 @@ In the notes, ‘admin’ refers to someone who develops and configures a DHIS2 
 |Description of report date|Allows an admin to customize the label that is used for the event&rsquo;s date.|![](resources/images/../../admin/icon-complete.png)|![](resources/images/../../admin/icon-complete.png)||
 |Data elements-compulsory|This enables an admin to mark a data element as "compulsory", meaning an event can not be saved until a value is captured.|![](resources/images/../../admin/icon-complete.png)|![](resources/images/../../admin/icon-complete.png)||
 |Data elements-allow provided elsewhere|On the form, this places a tick-box next to the selected data element, and enables previous data to be pulled into the data element.|![](resources/images/../../admin/icon-incomplete.png)|![](resources/images/../../admin/icon-na.png)||
-|Data elements-display in reports|Displays the value of this data element into the single event without registration data entry function.|![](resources/images/../../admin/icon-incomplete.png)|![](resources/images/../../admin/icon-complete.png)||
+|Data elements-display in reports|Displays the value of this data element into the single event without registration data entry function.|![](resources/images/../../admin/icon-complete.png)|![](resources/images/../../admin/icon-complete.png)||
 |Data elements-date in future|For date Data Elements, this enables an admin to either prevent or allow future dates to be captured.|![](resources/images/../../admin/icon-complete.png)|![](resources/images/../../admin/icon-complete.png)||
 |Data elements-render options as radio|Enables an admin to choose how options will be displayed on-screen for each Data Element (i.e. either as drop-down list or as radio buttons).|![](resources/images/../../admin/icon-incomplete.png)|![](resources/images/../../admin/icon-incomplete.png)||
 |Block entry form after completed|Prevents all edits to events after they have been completed.|![](resources/images/../../admin/icon-complete.png)|![](resources/images/../../admin/icon-complete.png)||

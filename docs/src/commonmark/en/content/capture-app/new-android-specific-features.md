@@ -75,6 +75,14 @@ A contextual guide opens the first time the user opens the App.
 >
 >  User is able to re-open<!-- PALD: unnecessary: (trigger)--> the instructions by clicking on the three dots at the top right corner of the screen.
 
+## Icons
+
+Icons used in enrollments or events status:
+![](resources/images/image145.png){width=25%}
+
+Icons used in synchronization status:
+![](resources/images/image146.png){width=25%}
+
 ## Filter
 
  <!-- DHIS2-SECTION-ID:generic_filter -->
@@ -102,18 +110,19 @@ It is possible to filter events based on its assignment to the current user. The
 ### Event Date/Date/Period
 
 Filter the Events, TEIs(based on their events) and data sets, the following periods of time are availables:
-- Today
-- This week
-- This month
-- Yesterday
-- Last week
-- Last month
-- Tomorrow
-- Next week
-- Next month
-- From-to
-- Other (Opens a date picker)
-- Anytime
+
+* Today
+* This week
+* This month
+* Yesterday
+* Last week
+* Last month
+* Tomorrow
+* Next week
+* Next month
+* From-to
+* Other (Opens a date picker)
+* Anytime
 
 ### Org. Unit
 
@@ -122,19 +131,19 @@ Allows the user to type the search or select an org unit from the tree.
 ### Sync
 
 Filer by:
-- Synced (events, TEIs, Data Sets)
-- Not Synced
-- Sync Error
-- SMS Synced
+* Synced (events, TEIs, Data Sets)
+* Not Synced
+* Sync Error
+* SMS Synced
 
 ### Event Status
 
 Filter the events by:
-- Open
-- Schedule
-- Overdue
-- Completed
-- Skipped
+* Open
+* Schedule
+* Overdue
+* Completed
+* Skipped
 
 Multiple status selection is permited. Once you open a TEI, the filter will be kept in the dashboard and show only the events with the selected status.
 
@@ -213,10 +222,6 @@ The record is marked as “SMS synced”.
 >  Edit parameters related to SMS gateway in the SMS Settings (Settings Menu)
 
 ![](resources/images/image90.png){ width=25%}
-
-> **Note**
->
->  Note that in order to user the SMS sync capabilities the SMS services needs to be enabled in the server side as described in the (official documentation)[https://docs.dhis2.org/master/en/dhis2_user_manual_en/mobile.html#sms-service]. You can also find more information on how to use different gateways in the (Android Implementation Guidelines)[https://docs.dhis2.org/master/en/dhis2_android_implementation_guideline/about-this-guide.html].
 
 ## Org unit
 
