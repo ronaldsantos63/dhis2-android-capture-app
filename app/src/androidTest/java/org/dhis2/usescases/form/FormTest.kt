@@ -2,7 +2,6 @@ package org.dhis2.usescases.form
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.rule.ActivityTestRule
-import org.dhis2.common.viewactions.scrollToBottomRecyclerView
 import org.dhis2.usescases.BaseTest
 import org.dhis2.usescases.eventsWithoutRegistration.eventCapture.EventCaptureActivity
 import org.dhis2.usescases.searchTrackEntity.SearchTEActivity
@@ -38,15 +37,14 @@ class FormTest: BaseTest() {
             selectAnOrgUnit("Ngelehun CHC")
             clickOnAcceptButton()
             acceptDate()
-            Thread.sleep(100)
         }
 
         enrollmentRobot {
             clickOnPersonAttributes("Attributes - Person")
             scrollToBottomProgramForm()
-            clickOnInputDate("DD TEST AGE*")
-            clickOnAcceptEnrollmentDate()
             clickOnDatePicker()
+            clickOnAcceptEnrollmentDate()
+            clickOnInputDate("DD TEST DATE*")
             clickOnAcceptEnrollmentDate()
             clickOnSaveEnrollment()
         }
@@ -57,11 +55,12 @@ class FormTest: BaseTest() {
 
         formRobot {
             //clickOnASpecificSection()
+            Thread.sleep(4000)
             clickOnSpinner("ZZ TEST RULE ACTIONS A")
             selectAction(NO_ACTION)
         }
 
-        Thread.sleep(100000)
+        Thread.sleep(10000)
     }
 
 

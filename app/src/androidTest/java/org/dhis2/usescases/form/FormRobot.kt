@@ -3,6 +3,7 @@ package org.dhis2.usescases.form
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.action.ViewActions.typeText
+import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.contrib.RecyclerViewActions.actionOnItem
 import androidx.test.espresso.matcher.ViewMatchers.hasDescendant
 import androidx.test.espresso.matcher.ViewMatchers.withId
@@ -10,8 +11,11 @@ import androidx.test.espresso.matcher.ViewMatchers.withText
 import org.dhis2.R
 import org.dhis2.common.BaseRobot
 import org.dhis2.common.viewactions.clickChildViewWithId
+import org.dhis2.data.forms.dataentry.fields.FormViewHolder
 import org.dhis2.data.forms.dataentry.fields.edittext.EditTextCustomHolder
+import org.dhis2.data.forms.dataentry.fields.spinner.SpinnerHolder
 import org.hamcrest.Matchers.allOf
+import org.hamcrest.Matchers.hasItem
 
 fun formRobot(formRobot: FormRobot.() -> Unit) {
     FormRobot().apply {
@@ -29,7 +33,9 @@ class FormRobot : BaseRobot() {
 
     fun clickOnSpinner(label: String) {
         onView(withId(R.id.formRecycler))
-            .perform(actionOnItem<EditTextCustomHolder>(hasDescendant(withText(label)), clickChildViewWithId(R.id.input_editText)))
+            //.check(matches(hasItem(hasDescendant(withText(label)))))
+            .perform(actionOnItem<FormViewHolder>(hasDescendant(withText(label)), clickChildViewWithId(R.id.input_editText)))
+
     }
 
     fun typeOnSearchInput(searchWord: String) {
