@@ -20,8 +20,10 @@ import org.dhis2.common.viewactions.clickChildViewWithId
 import org.dhis2.data.forms.dataentry.fields.edittext.EditTextCustomHolder
 import org.dhis2.usescases.form.FormTest.Companion.NO_ACTION
 import org.dhis2.usescases.form.FormTest.Companion.NO_ACTION_POSITION
+import org.hamcrest.Matchers.`is`
 import org.hamcrest.Matchers.allOf
 import org.hamcrest.Matchers.anything
+import org.hamcrest.Matchers.instanceOf
 import org.hamcrest.Matchers.not
 
 fun formRobot(formRobot: FormRobot.() -> Unit) {
@@ -62,8 +64,8 @@ class FormRobot : BaseRobot() {
                 )))
             .atPosition(0)
             .perform(click())*/
-        onData(anything())
-            .inAdapterView(withId(R.id.spinner_text)).atPosition(position)
+        onData(allOf(`is`(instanceOf(String::class.java)), `is`(action)))
+            .inAdapterView(withId(R.id.input_editText)) //spinner father spinner_text
             .perform(click())
     }
 
