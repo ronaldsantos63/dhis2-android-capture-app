@@ -143,7 +143,7 @@ class SearchTeiRobot : BaseRobot() {
 
     fun checkCarouselTEICardInfo(firstName: String) {
         onView(withId(R.id.map_carousel))
-            .check(matches(atPosition(3, hasDescendant(withText(firstName)))))
+            .check(matches(hasItem(hasDescendant(withText(firstName)))))
     }
 
     fun selectAnOrgUnit(orgUnit: String) {
