@@ -9,6 +9,7 @@ import com.google.auto.value.AutoValue;
 
 import org.dhis2.R;
 import org.dhis2.data.forms.dataentry.DataEntryViewHolderTypes;
+import org.dhis2.data.forms.dataentry.fields.ActionType;
 import org.dhis2.data.forms.dataentry.fields.FieldViewModel;
 import org.dhis2.data.forms.dataentry.fields.RowAction;
 import org.hisp.dhis.android.core.common.ObjectStyle;
@@ -107,7 +108,16 @@ public abstract class EditTextViewModel extends EditTextModel<String> {
     }
 
     public void onTextFilled(String value, String error) {
-        processor().onNext(RowAction.create(uid(), value, null, error));
+        processor().onNext(new RowAction(
+                uid(),
+                value,
+                null,
+                null,
+                null,
+                null,
+                error,
+                ActionType.ON_SAVE
+        ));
     }
 
     public boolean isLongText() {

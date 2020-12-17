@@ -4,6 +4,7 @@ import com.google.auto.value.AutoValue
 import io.reactivex.processors.FlowableProcessor
 import org.dhis2.R
 import org.dhis2.data.forms.dataentry.DataEntryViewHolderTypes
+import org.dhis2.data.forms.dataentry.fields.ActionType
 import org.dhis2.data.forms.dataentry.fields.FieldViewModel
 import org.dhis2.data.forms.dataentry.fields.RowAction
 import org.hisp.dhis.android.core.common.ObjectStyle
@@ -259,6 +260,12 @@ abstract class ScanTextViewModel : FieldViewModel() {
     abstract fun isSearchMode(): Boolean
 
     fun onScanSelected(value: String?) {
-        processor()?.onNext(RowAction.create(uid(), value))
+        processor()?.onNext(
+            RowAction(
+                id = uid(),
+                value = value,
+                type = ActionType.ON_SAVE
+            )
+        )
     }
 }

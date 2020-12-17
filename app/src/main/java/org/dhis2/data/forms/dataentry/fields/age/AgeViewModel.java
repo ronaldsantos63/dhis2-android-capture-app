@@ -7,6 +7,7 @@ import com.google.auto.value.AutoValue;
 
 import org.dhis2.R;
 import org.dhis2.data.forms.dataentry.DataEntryViewHolderTypes;
+import org.dhis2.data.forms.dataentry.fields.ActionType;
 import org.dhis2.data.forms.dataentry.fields.FieldViewModel;
 import org.dhis2.data.forms.dataentry.fields.RowAction;
 import org.dhis2.utils.DateUtils;
@@ -66,7 +67,7 @@ public abstract class AgeViewModel extends FieldViewModel {
     @NonNull
     @Override
     public FieldViewModel withFocus(boolean isFocused) {
-        return new AutoValue_AgeViewModel(uid(), label(), programStageSection(), allowFutureDate(), editable(), optionSet(), warning(), error(), description(), objectStyle(), null,  DataEntryViewHolderTypes.AGE_VIEW, processor(), focusProcessor(), isFocused, mandatory(), value(), isBackgroundTransparent(), isSearchMode());
+        return new AutoValue_AgeViewModel(uid(), label(), programStageSection(), allowFutureDate(), editable(), optionSet(), warning(), error(), description(), objectStyle(), null, DataEntryViewHolderTypes.AGE_VIEW, processor(), focusProcessor(), isFocused, mandatory(), value(), isBackgroundTransparent(), isSearchMode());
     }
 
     @Override
@@ -78,7 +79,16 @@ public abstract class AgeViewModel extends FieldViewModel {
 
     public void onAgeSet(Date ageDate) {
         if (processor() == null) return;
-        processor().onNext(RowAction.create(uid(), ageDate == null ? null : DateUtils.oldUiDateFormat().format(ageDate)));
+        processor().onNext(new RowAction(
+                uid(),
+                ageDate == null ? null : DateUtils.oldUiDateFormat().format(ageDate),
+                null,
+                null,
+                null,
+                null,
+                null,
+                ActionType.ON_SAVE)
+        );
     }
 
     public abstract boolean isSearchMode();

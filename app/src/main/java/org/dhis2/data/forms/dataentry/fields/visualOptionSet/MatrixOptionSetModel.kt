@@ -4,6 +4,7 @@ import com.google.auto.value.AutoValue
 import io.reactivex.processors.FlowableProcessor
 import org.dhis2.R
 import org.dhis2.data.forms.dataentry.DataEntryViewHolderTypes
+import org.dhis2.data.forms.dataentry.fields.ActionType
 import org.dhis2.data.forms.dataentry.fields.FieldViewModel
 import org.dhis2.data.forms.dataentry.fields.RowAction
 import org.hisp.dhis.android.core.common.ObjectStyle
@@ -219,7 +220,13 @@ abstract class MatrixOptionSetModel : FieldViewModel() {
         } else {
             selectedOption.code()
         }
-        processor()?.onNext(RowAction.create(uid(), nextValue))
+        processor()?.onNext(
+            RowAction(
+                id = uid(),
+                value = nextValue,
+                type = ActionType.ON_SAVE
+            )
+        )
     }
 
     fun labelTag(): String = "${labelTag}_${uid()}"

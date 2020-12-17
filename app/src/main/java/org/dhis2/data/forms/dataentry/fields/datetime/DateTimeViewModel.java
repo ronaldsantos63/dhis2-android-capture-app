@@ -6,6 +6,7 @@ import com.google.auto.value.AutoValue;
 
 import org.dhis2.R;
 import org.dhis2.data.forms.dataentry.DataEntryViewHolderTypes;
+import org.dhis2.data.forms.dataentry.fields.ActionType;
 import org.dhis2.data.forms.dataentry.fields.FieldViewModel;
 import org.dhis2.data.forms.dataentry.fields.RowAction;
 import org.dhis2.utils.DateUtils;
@@ -120,7 +121,16 @@ public abstract class DateTimeViewModel extends FieldViewModel {
                     dateFormatted = DateUtils.timeFormat().format(date);
             }
         }
-        RowAction rowAction = RowAction.create(uid(), date != null ? dateFormatted : null);
+        RowAction rowAction = new RowAction(
+                uid(),
+                date != null ? dateFormatted : null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                ActionType.ON_SAVE
+        );
         processor().onNext(rowAction);
     }
 

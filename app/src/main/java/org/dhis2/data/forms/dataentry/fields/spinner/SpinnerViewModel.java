@@ -6,6 +6,7 @@ import com.google.auto.value.AutoValue;
 
 import org.dhis2.R;
 import org.dhis2.data.forms.dataentry.DataEntryViewHolderTypes;
+import org.dhis2.data.forms.dataentry.fields.ActionType;
 import org.dhis2.data.forms.dataentry.fields.FieldViewModel;
 import org.dhis2.data.forms.dataentry.fields.RowAction;
 import org.hisp.dhis.android.core.common.ObjectStyle;
@@ -112,6 +113,15 @@ public abstract class SpinnerViewModel extends FieldViewModel {
     public abstract String renderType();
 
     public void onOptionSelected(String optionName, String optionCode) {
-        processor().onNext(RowAction.create(uid(), !isBackgroundTransparent() ? optionName + "_os_" + optionCode : optionCode, true, optionCode, optionName));
+        processor().onNext(new RowAction(
+                uid(),
+                !isBackgroundTransparent() ? optionName + "_os_" + optionCode : optionCode,
+                true,
+                optionCode,
+                optionName,
+                null,
+                null,
+                ActionType.ON_SAVE
+        ));
     }
 }

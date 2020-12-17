@@ -32,7 +32,8 @@ class EventCaptureFormPresenter(
     fun init() {
         disposable.add(
             Flowable.combineLatest<RowAction, Pair<String, Boolean>, RowAction>(
-                onFieldActionProcessor.onBackpressureBuffer().distinctUntilChanged(),
+                onFieldActionProcessor
+                    .onBackpressureBuffer().distinctUntilChanged(),
                 focusProcessor.startWith(focusedItem),
                 BiFunction { action, focusedItem ->
                     this.focusedItem = focusedItem
@@ -42,21 +43,21 @@ class EventCaptureFormPresenter(
                 .doOnNext { activityPresenter.showProgress() }
                 .observeOn(schedulerProvider.io())
                 .switchMap { action ->
-                    if (action.error() != null) {
-                        if (itemsWithError.find { it.id() == action.id() } == null) {
+                    if (action.error != null) {
+                        if (itemsWithError.find { it.id == action.id } == null) {
                             itemsWithError.add(action)
                         }
                         Flowable.just(
                             StoreResult(
-                                action.id(),
+                                action.id,
                                 ValueStoreImpl.ValueStoreResult.VALUE_HAS_NOT_CHANGED
                             )
                         )
                     } else {
-                        itemsWithError.find { it.id() == action.id() }?.let {
+                        itemsWithError.find { it.id == action.id }?.let {
                             itemsWithError.remove(it)
                         }
-                        valueStore.save(action.id(), action.value())
+                        valueStore.save(action.id, action.value)
                     }
                 }
                 .subscribeOn(schedulerProvider.io())
@@ -104,8 +105,8 @@ class EventCaptureFormPresenter(
         fieldsWithError: MutableList<RowAction>
     ): List<FieldViewModel> {
         return list.map { item ->
-            fieldsWithError.find { it.id() == item.uid() }?.let { action ->
-                item.withValue(action.value()).withError(action.error())
+            fieldsWithError.find { it.id == item.uid() }?.let { action ->
+                item.withValue(action.value).withError(action.error)
             } ?: item
         }
     }

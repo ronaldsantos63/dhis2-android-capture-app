@@ -6,7 +6,9 @@ import com.google.auto.value.AutoValue;
 
 import org.dhis2.R;
 import org.dhis2.data.forms.dataentry.DataEntryViewHolderTypes;
+import org.dhis2.data.forms.dataentry.fields.ActionType;
 import org.dhis2.data.forms.dataentry.fields.FieldViewModel;
+
 import org.dhis2.data.forms.dataentry.fields.RowAction;
 import org.hisp.dhis.android.core.common.ObjectStyle;
 
@@ -78,6 +80,14 @@ public abstract class OrgUnitViewModel extends FieldViewModel {
     }
 
     public void onDataChange(String data) {
-        processor().onNext(RowAction.create(uid(), data));
+        processor().onNext(new RowAction(
+                uid(),
+                data,
+                null,
+                null,
+                null,
+                null,
+                null,
+                ActionType.ON_SAVE));
     }
 }

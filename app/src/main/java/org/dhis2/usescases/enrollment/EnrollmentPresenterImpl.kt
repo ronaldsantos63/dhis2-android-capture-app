@@ -149,25 +149,25 @@ class EnrollmentPresenterImpl(
                 .observeOn(schedulerProvider.io())
                 .flatMap { rowAction ->
 
-                    if (rowAction.error() != null) {
-                        if (itemsWithError.find { it.id() == rowAction.id() } == null) {
+                    if (rowAction.error != null) {
+                        if (itemsWithError.find { it.id == rowAction.id } == null) {
                             itemsWithError.add(rowAction)
                         }
                         Flowable.just(
                             StoreResult(
-                                rowAction.id(),
+                                rowAction.id,
                                 ValueStoreImpl.ValueStoreResult.VALUE_HAS_NOT_CHANGED
                             )
                         )
                     } else {
-                        itemsWithError.find { it.id() == rowAction.id() }?.let {
+                        itemsWithError.find { it.id == rowAction.id }?.let {
                             itemsWithError.remove(it)
                         }
 
-                        when (rowAction.id()) {
+                        when (rowAction.id) {
                             EnrollmentRepository.ENROLLMENT_DATE_UID -> {
                                 enrollmentObjectRepository.setEnrollmentDate(
-                                    rowAction.value()?.toDate()
+                                    rowAction.value?.toDate()
                                 )
                                 Flowable.just(
                                     StoreResult(
@@ -178,7 +178,7 @@ class EnrollmentPresenterImpl(
                             }
                             EnrollmentRepository.INCIDENT_DATE_UID -> {
                                 enrollmentObjectRepository.setIncidentDate(
-                                    rowAction.value()?.toDate()
+                                    rowAction.value?.toDate()
                                 )
                                 Flowable.just(
                                     StoreResult(
@@ -196,9 +196,9 @@ class EnrollmentPresenterImpl(
                                 )
                             }
                             EnrollmentRepository.TEI_COORDINATES_UID -> {
-                                val geometry = rowAction.extraData()?.let {
+                                val geometry = rowAction.extraData?.let {
                                     Geometry.builder()
-                                        .coordinates(rowAction.value())
+                                        .coordinates(rowAction.value)
                                         .type(FeatureType.valueOf(it))
                                         .build()
                                 }
@@ -211,9 +211,9 @@ class EnrollmentPresenterImpl(
                                 )
                             }
                             EnrollmentRepository.ENROLLMENT_COORDINATES_UID -> {
-                                val geometry = rowAction.extraData()?.let {
+                                val geometry = rowAction.extraData?.let {
                                     Geometry.builder()
-                                        .coordinates(rowAction.value())
+                                        .coordinates(rowAction.value)
                                         .type(FeatureType.valueOf(it))
                                         .build()
                                 }
@@ -225,7 +225,7 @@ class EnrollmentPresenterImpl(
                                     )
                                 )
                             }
-                            else -> valueStore.save(rowAction.id(), rowAction.value())
+                            else -> valueStore.save(rowAction.id, rowAction.value)
                         }
                     }
                 }
@@ -341,8 +341,8 @@ class EnrollmentPresenterImpl(
         fieldsWithError: MutableList<RowAction>
     ): List<FieldViewModel> {
         return list.map { item ->
-            fieldsWithError.find { it.id() == item.uid() }?.let { action ->
-                item.withValue(action.value()).withError(action.error())
+            fieldsWithError.find { it.id == item.uid() }?.let { action ->
+                item.withValue(action.value).withError(action.error)
             } ?: item
         }
     }
@@ -417,11 +417,11 @@ class EnrollmentPresenterImpl(
                 if (isUnique && field.value() != null) {
                     uniqueValueAlreadyExist =
                         d2.trackedEntityModule()
-                        .trackedEntityAttributeValues()
-                        .byTrackedEntityAttribute()
-                        .eq(field.uid())
-                        .byValue().eq(field.value())
-                        .blockingGet().size > 1
+                            .trackedEntityAttributeValues()
+                            .byTrackedEntityAttribute()
+                            .eq(field.uid())
+                            .byValue().eq(field.value())
+                            .blockingGet().size > 1
                     if (uniqueValueAlreadyExist) {
                         uniqueFields[field.uid()] = field.label()
                     }
@@ -540,7 +540,7 @@ class EnrollmentPresenterImpl(
         val stage = d2.programModule().programStages().uid(event.programStage()).blockingGet()
         val needsCatCombo = programRepository.blockingGet().categoryComboUid() != null &&
             d2.categoryModule().categoryCombos().uid(catComboUid)
-            .blockingGet().isDefault == false
+                .blockingGet().isDefault == false
         val needsCoordinates =
             stage.featureType() != null && stage.featureType() != FeatureType.NONE
 
@@ -691,8 +691,8 @@ class EnrollmentPresenterImpl(
             )
             valueStore.deleteOptionValueIfSelectedInGroup(field, optionGroupUid, true)
         } else if (!optionsGroupsToHide.containsKey(field) || !optionsGroupsToHide.contains(
-            optionGroupUid
-        )
+                optionGroupUid
+            )
         ) {
             if (optionsGroupToShow[field] != null) {
                 optionsGroupToShow[field]!!.add(optionGroupUid)
