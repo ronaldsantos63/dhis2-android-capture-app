@@ -47,6 +47,7 @@ public final class FieldViewModelFactoryImpl implements FieldViewModelFactory {
 
     private final FlowableProcessor<RowAction> fieldProcessor = PublishProcessor.create();
     private final FlowableProcessor<String> sectionProcessor = PublishProcessor.create();
+    private final FlowableProcessor<RowAction> focusProcessor = PublishProcessor.create();
     private final ObservableField<String> currentSection = new ObservableField<String>("");
 
     private final List<ValueTypeRenderingType> optionSetTextRenderings = Arrays.asList(
@@ -85,7 +86,7 @@ public final class FieldViewModelFactoryImpl implements FieldViewModelFactory {
                 trackedEntityAttribute.fieldMask(),
                 fieldProcessor,
                 null,
-                null);
+                focusProcessor);
     }
 
     @NonNull

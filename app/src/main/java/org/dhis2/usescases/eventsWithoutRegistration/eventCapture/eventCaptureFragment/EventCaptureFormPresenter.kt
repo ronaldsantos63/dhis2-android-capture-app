@@ -2,11 +2,11 @@ package org.dhis2.usescases.eventsWithoutRegistration.eventCapture.eventCaptureF
 
 import io.reactivex.Flowable
 import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.functions.BiFunction
 import io.reactivex.processors.FlowableProcessor
 import org.dhis2.data.forms.dataentry.StoreResult
 import org.dhis2.data.forms.dataentry.ValueStore
 import org.dhis2.data.forms.dataentry.ValueStoreImpl
+import org.dhis2.data.forms.dataentry.fields.ActionType
 import org.dhis2.data.forms.dataentry.fields.FieldViewModel
 import org.dhis2.data.forms.dataentry.fields.RowAction
 import org.dhis2.data.schedulers.SchedulerProvider
@@ -21,59 +21,89 @@ class EventCaptureFormPresenter(
     val valueStore: ValueStore,
     val schedulerProvider: SchedulerProvider,
     private val onFieldActionProcessor: FlowableProcessor<RowAction>,
-    private val focusProcessor: FlowableProcessor<Pair<String, Boolean>>
+    private val focusProcessor: FlowableProcessor<RowAction>
 ) {
     private var selectedSection: String? = null
     var disposable: CompositeDisposable = CompositeDisposable()
-    private var focusedItem: Pair<String, Boolean> = Pair("", false)
+    private var focusedItem = RowAction(id = "", type = ActionType.ON_FOCUS)
     private var itemList: List<FieldViewModel>? = null
     private val itemsWithError = mutableListOf<RowAction>()
 
     fun init() {
         disposable.add(
-            Flowable.combineLatest<RowAction, Pair<String, Boolean>, RowAction>(
-                onFieldActionProcessor
-                    .onBackpressureBuffer().distinctUntilChanged(),
-                focusProcessor.startWith(focusedItem),
-                BiFunction { action, focusedItem ->
-                    this.focusedItem = focusedItem
-                    action
-                }
+            Flowable.merge(
+                onFieldActionProcessor.onBackpressureBuffer().distinctUntilChanged(),
+                focusProcessor
             )
                 .doOnNext { activityPresenter.showProgress() }
                 .observeOn(schedulerProvider.io())
-                .switchMap { action ->
-                    if (action.error != null) {
-                        if (itemsWithError.find { it.id == action.id } == null) {
-                            itemsWithError.add(action)
-                        }
-                        Flowable.just(
-                            StoreResult(
-                                action.id,
-                                ValueStoreImpl.ValueStoreResult.VALUE_HAS_NOT_CHANGED
+                .flatMap { action ->
+                    when (action.type) {
+                        ActionType.ON_TEXT_CHANGE -> {
+                            itemList?.let { list ->
+                                list.find { item ->
+                                    item.uid() == action.id
+                                }?.let { item ->
+                                    itemList = list.updated(
+                                        list.indexOf(item),
+                                        item.withValue(action.value).withEditMode(true)
+                                    )
+                                }
+                            }
+                            Flowable.just(
+                                StoreResult(
+                                    action.id,
+                                    null
+                                )
                             )
-                        )
-                    } else {
-                        itemsWithError.find { it.id == action.id }?.let {
-                            itemsWithError.remove(it)
                         }
-                        valueStore.save(action.id, action.value)
+                        ActionType.ON_FOCUS, ActionType.ON_NEXT -> {
+                            this.focusedItem = action
+                            Flowable.just(
+                                StoreResult(
+                                    action.id,
+                                    ValueStoreImpl.ValueStoreResult.VALUE_HAS_NOT_CHANGED
+                                )
+                            )
+                        }
+                        ActionType.ON_SAVE -> {
+                            if (action.error != null) {
+                                if (itemsWithError.find { it.id == action.id } == null) {
+                                    itemsWithError.add(action)
+                                }
+                                Flowable.just(
+                                    StoreResult(
+                                        action.id,
+                                        ValueStoreImpl.ValueStoreResult.VALUE_HAS_NOT_CHANGED
+                                    )
+                                )
+                            } else {
+                                itemsWithError.find { it.id == action.id }?.let {
+                                    itemsWithError.remove(it)
+                                }
+                                valueStore.save(action.id, action.value)
+                            }
+                        }
                     }
                 }
                 .subscribeOn(schedulerProvider.io())
                 .observeOn(schedulerProvider.ui())
                 .subscribe(
-                    {
-                        if (it.valueStoreResult == ValueStoreImpl.ValueStoreResult.VALUE_CHANGED) {
-                            activityPresenter.nextCalculation(true)
-                        } else {
-                            itemList?.let { fields ->
-                                activityPresenter.formFieldsFlowable()
-                                    .onNext(fields.toMutableList())
+                    { result ->
+                        result.valueStoreResult?.let {
+                            if (it == ValueStoreImpl.ValueStoreResult.VALUE_CHANGED) {
+                                activityPresenter.nextCalculation(true)
+                            } else {
+                                itemList?.let { fields ->
+                                    activityPresenter.formFieldsFlowable()
+                                        .onNext(fields.toMutableList())
+                                }
                             }
-                        }
+                        } ?: activityPresenter.hideProgress()
                     },
-                    Timber::e
+                    {
+                        Timber.tag(TAG).e(it)
+                    }
                 )
         )
 
@@ -132,10 +162,10 @@ class EventCaptureFormPresenter(
     }
 
     private fun setFocusedItem(list: List<FieldViewModel>) = focusedItem.let {
-        val uid = if (it.second) {
-            getNextItem(it.first)
+        val uid = if (it.type == ActionType.ON_NEXT) {
+            getNextItem(it.id)
         } else {
-            it.first
+            it.id
         }
 
         list.find { item ->
@@ -147,4 +177,8 @@ class EventCaptureFormPresenter(
 
     fun <E> Iterable<E>.updated(index: Int, elem: E): List<E> =
         mapIndexed { i, existing -> if (i == index) elem else existing }
+
+    companion object {
+        private const val TAG = "EventCaptureFormPr"
+    }
 }

@@ -15,6 +15,7 @@ import org.dhis2.data.forms.dataentry.EnrollmentRepository
 import org.dhis2.data.forms.dataentry.StoreResult
 import org.dhis2.data.forms.dataentry.ValueStore
 import org.dhis2.data.forms.dataentry.ValueStoreImpl
+import org.dhis2.data.forms.dataentry.fields.ActionType
 import org.dhis2.data.forms.dataentry.fields.FieldViewModel
 import org.dhis2.data.forms.dataentry.fields.RowAction
 import org.dhis2.data.forms.dataentry.fields.display.DisplayViewModel
@@ -61,7 +62,7 @@ class EnrollmentPresenterImpl(
     private val mandatoryWarning: String,
     private val onRowActionProcessor: FlowableProcessor<RowAction>,
     private val sectionProcessor: Flowable<String>,
-    private val focusProcessor: FlowableProcessor<Pair<String, Boolean>>
+    private val focusProcessor: FlowableProcessor<RowAction>
 ) : RulesActionCallbacks {
 
     private val disposable = CompositeDisposable()
@@ -77,7 +78,7 @@ class EnrollmentPresenterImpl(
     private var showErrors: Pair<Boolean, Boolean> = Pair(first = false, second = false)
     private var hasShownIncidentDateEditionWarning = false
     private var hasShownEnrollmentDateEditionWarning = false
-    private var focusedItem: Pair<String, Boolean> = Pair("", false)
+    private var focusedItem = RowAction(id = "", type = ActionType.ON_FOCUS)
     private var itemList: List<FieldViewModel>? = null
     private val itemsWithError = mutableListOf<RowAction>()
 
@@ -149,84 +150,88 @@ class EnrollmentPresenterImpl(
                 .observeOn(schedulerProvider.io())
                 .flatMap { rowAction ->
 
-                    if (rowAction.error != null) {
-                        if (itemsWithError.find { it.id == rowAction.id } == null) {
-                            itemsWithError.add(rowAction)
-                        }
-                        Flowable.just(
-                            StoreResult(
-                                rowAction.id,
-                                ValueStoreImpl.ValueStoreResult.VALUE_HAS_NOT_CHANGED
+                    if (rowAction.type == ActionType.ON_SAVE) {
+                        if (rowAction.error != null) {
+                            if (itemsWithError.find { it.id == rowAction.id } == null) {
+                                itemsWithError.add(rowAction)
+                            }
+                            Flowable.just(
+                                StoreResult(
+                                    rowAction.id,
+                                    ValueStoreImpl.ValueStoreResult.VALUE_HAS_NOT_CHANGED
+                                )
                             )
-                        )
-                    } else {
-                        itemsWithError.find { it.id == rowAction.id }?.let {
-                            itemsWithError.remove(it)
-                        }
+                        } else {
+                            itemsWithError.find { it.id == rowAction.id }?.let {
+                                itemsWithError.remove(it)
+                            }
 
-                        when (rowAction.id) {
-                            EnrollmentRepository.ENROLLMENT_DATE_UID -> {
-                                enrollmentObjectRepository.setEnrollmentDate(
-                                    rowAction.value?.toDate()
-                                )
-                                Flowable.just(
-                                    StoreResult(
-                                        EnrollmentRepository.ENROLLMENT_DATE_UID,
-                                        ValueStoreImpl.ValueStoreResult.VALUE_CHANGED
+                            when (rowAction.id) {
+                                EnrollmentRepository.ENROLLMENT_DATE_UID -> {
+                                    enrollmentObjectRepository.setEnrollmentDate(
+                                        rowAction.value?.toDate()
                                     )
-                                )
-                            }
-                            EnrollmentRepository.INCIDENT_DATE_UID -> {
-                                enrollmentObjectRepository.setIncidentDate(
-                                    rowAction.value?.toDate()
-                                )
-                                Flowable.just(
-                                    StoreResult(
-                                        EnrollmentRepository.INCIDENT_DATE_UID,
-                                        ValueStoreImpl.ValueStoreResult.VALUE_CHANGED
+                                    Flowable.just(
+                                        StoreResult(
+                                            EnrollmentRepository.ENROLLMENT_DATE_UID,
+                                            ValueStoreImpl.ValueStoreResult.VALUE_CHANGED
+                                        )
                                     )
-                                )
-                            }
-                            EnrollmentRepository.ORG_UNIT_UID -> {
-                                Flowable.just(
-                                    StoreResult(
-                                        "",
-                                        ValueStoreImpl.ValueStoreResult.VALUE_CHANGED
-                                    )
-                                )
-                            }
-                            EnrollmentRepository.TEI_COORDINATES_UID -> {
-                                val geometry = rowAction.extraData?.let {
-                                    Geometry.builder()
-                                        .coordinates(rowAction.value)
-                                        .type(FeatureType.valueOf(it))
-                                        .build()
                                 }
-                                saveTeiGeometry(geometry)
-                                Flowable.just(
-                                    StoreResult(
-                                        "",
-                                        ValueStoreImpl.ValueStoreResult.VALUE_CHANGED
+                                EnrollmentRepository.INCIDENT_DATE_UID -> {
+                                    enrollmentObjectRepository.setIncidentDate(
+                                        rowAction.value?.toDate()
                                     )
-                                )
-                            }
-                            EnrollmentRepository.ENROLLMENT_COORDINATES_UID -> {
-                                val geometry = rowAction.extraData?.let {
-                                    Geometry.builder()
-                                        .coordinates(rowAction.value)
-                                        .type(FeatureType.valueOf(it))
-                                        .build()
+                                    Flowable.just(
+                                        StoreResult(
+                                            EnrollmentRepository.INCIDENT_DATE_UID,
+                                            ValueStoreImpl.ValueStoreResult.VALUE_CHANGED
+                                        )
+                                    )
                                 }
-                                saveEnrollmentGeometry(geometry)
-                                Flowable.just(
-                                    StoreResult(
-                                        "",
-                                        ValueStoreImpl.ValueStoreResult.VALUE_CHANGED
+                                EnrollmentRepository.ORG_UNIT_UID -> {
+                                    Flowable.just(
+                                        StoreResult(
+                                            "",
+                                            ValueStoreImpl.ValueStoreResult.VALUE_CHANGED
+                                        )
                                     )
-                                )
+                                }
+                                EnrollmentRepository.TEI_COORDINATES_UID -> {
+                                    val geometry = rowAction.extraData?.let {
+                                        Geometry.builder()
+                                            .coordinates(rowAction.value)
+                                            .type(FeatureType.valueOf(it))
+                                            .build()
+                                    }
+                                    saveTeiGeometry(geometry)
+                                    Flowable.just(
+                                        StoreResult(
+                                            "",
+                                            ValueStoreImpl.ValueStoreResult.VALUE_CHANGED
+                                        )
+                                    )
+                                }
+                                EnrollmentRepository.ENROLLMENT_COORDINATES_UID -> {
+                                    val geometry = rowAction.extraData?.let {
+                                        Geometry.builder()
+                                            .coordinates(rowAction.value)
+                                            .type(FeatureType.valueOf(it))
+                                            .build()
+                                    }
+                                    saveEnrollmentGeometry(geometry)
+                                    Flowable.just(
+                                        StoreResult(
+                                            "",
+                                            ValueStoreImpl.ValueStoreResult.VALUE_CHANGED
+                                        )
+                                    )
+                                }
+                                else -> valueStore.save(rowAction.id, rowAction.value)
                             }
-                            else -> valueStore.save(rowAction.id, rowAction.value)
                         }
+                    } else {
+                        Flowable.just(StoreResult(rowAction.id, null))
                     }
                 }
                 .subscribeOn(schedulerProvider.io())
@@ -254,6 +259,7 @@ class EnrollmentPresenterImpl(
                                 Timber.tag(TAG).d("${it.uid} is not a data element or attribute")
                                 view.hideProgress()
                             }
+                            null -> view.hideProgress()
                         }
                     },
                     { Timber.tag(TAG).e(it) }
@@ -305,15 +311,32 @@ class EnrollmentPresenterImpl(
                 .subscribeOn(schedulerProvider.ui())
                 .observeOn(schedulerProvider.ui())
                 .subscribe(
-                    { map ->
-                        this.focusedItem = map
+                    { action ->
+                        when (action.type) {
+                            ActionType.ON_TEXT_CHANGE -> {
+                                itemList?.let { list ->
+                                    list.find { item ->
+                                        item.uid() == action.id
+                                    }?.let { item ->
+                                        itemList = list.updated(
+                                            list.indexOf(item),
+                                            item.withValue(action.value).withEditMode(true)
+                                        )
+                                    }
+                                }
+                            }
 
-                        itemList?.let {
-                            val list = mergeListWithErrorFields(
-                                it,
-                                itemsWithError
-                            )
-                            view.showFields(setFocusedItem(list))
+                            ActionType.ON_FOCUS, ActionType.ON_NEXT -> {
+                                this.focusedItem = action
+
+                                itemList?.let {
+                                    val list = mergeListWithErrorFields(
+                                        it,
+                                        itemsWithError
+                                    )
+                                    view.showFields(setFocusedItem(list))
+                                }
+                            }
                         }
                     },
                     {
@@ -348,10 +371,10 @@ class EnrollmentPresenterImpl(
     }
 
     private fun setFocusedItem(list: List<FieldViewModel>) = focusedItem.let {
-        val uid = if (it.second) {
-            getNextItem(it.first)
+        val uid = if (it.type == ActionType.ON_NEXT) {
+            getNextItem(it.id)
         } else {
-            it.first
+            it.id
         }
 
         list.find { item ->
@@ -417,11 +440,11 @@ class EnrollmentPresenterImpl(
                 if (isUnique && field.value() != null) {
                     uniqueValueAlreadyExist =
                         d2.trackedEntityModule()
-                            .trackedEntityAttributeValues()
-                            .byTrackedEntityAttribute()
-                            .eq(field.uid())
-                            .byValue().eq(field.value())
-                            .blockingGet().size > 1
+                        .trackedEntityAttributeValues()
+                        .byTrackedEntityAttribute()
+                        .eq(field.uid())
+                        .byValue().eq(field.value())
+                        .blockingGet().size > 1
                     if (uniqueValueAlreadyExist) {
                         uniqueFields[field.uid()] = field.label()
                     }
@@ -540,7 +563,7 @@ class EnrollmentPresenterImpl(
         val stage = d2.programModule().programStages().uid(event.programStage()).blockingGet()
         val needsCatCombo = programRepository.blockingGet().categoryComboUid() != null &&
             d2.categoryModule().categoryCombos().uid(catComboUid)
-                .blockingGet().isDefault == false
+            .blockingGet().isDefault == false
         val needsCoordinates =
             stage.featureType() != null && stage.featureType() != FeatureType.NONE
 
@@ -691,8 +714,8 @@ class EnrollmentPresenterImpl(
             )
             valueStore.deleteOptionValueIfSelectedInGroup(field, optionGroupUid, true)
         } else if (!optionsGroupsToHide.containsKey(field) || !optionsGroupsToHide.contains(
-                optionGroupUid
-            )
+            optionGroupUid
+        )
         ) {
             if (optionsGroupToShow[field] != null) {
                 optionsGroupToShow[field]!!.add(optionGroupUid)

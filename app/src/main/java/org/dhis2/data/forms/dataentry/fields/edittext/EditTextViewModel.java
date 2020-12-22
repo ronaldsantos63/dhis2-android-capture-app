@@ -107,7 +107,7 @@ public abstract class EditTextViewModel extends EditTextModel<String> {
     }
 
     public void onTextChange(String value) {
-        processor().onNext(new RowAction(
+        focusProcessor().onNext(new RowAction(
                 uid(),
                 value,
                 null,
