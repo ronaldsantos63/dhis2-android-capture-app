@@ -54,7 +54,7 @@ class EnrollmentPresenterImplTest {
     private val valueStore: ValueStore = mock()
     private val analyticsHelper: AnalyticsHelper = mock()
     private val onRowActionProcessor: FlowableProcessor<RowAction> = mock()
-    private val focusProcessor: FlowableProcessor<Pair<String, Boolean>> = mock()
+    private val focusProcessor: FlowableProcessor<RowAction> = mock()
     private val sectionProcessor: FlowableProcessor<String> = mock()
 
     @Before
