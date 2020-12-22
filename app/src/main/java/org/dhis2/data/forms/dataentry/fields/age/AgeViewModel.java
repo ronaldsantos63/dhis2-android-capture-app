@@ -16,7 +16,6 @@ import org.hisp.dhis.android.core.common.ObjectStyle;
 import java.util.Date;
 
 import io.reactivex.processors.FlowableProcessor;
-import kotlin.Pair;
 
 @AutoValue
 public abstract class AgeViewModel extends FieldViewModel {
@@ -31,7 +30,7 @@ public abstract class AgeViewModel extends FieldViewModel {
         return new AutoValue_AgeViewModel(id, label, section, null, editable, null, null, null, description, objectStyle, null, DataEntryViewHolderTypes.AGE_VIEW, null, null, false, mandatory, value, isBackgroundTransparent, isSearchMode);
     }
 
-    public static FieldViewModel create(String id, String label, Boolean mandatory, String value, String section, Boolean editable, String description, ObjectStyle objectStyle, boolean isBackgroundTransparent, boolean isSearchMode, FlowableProcessor<RowAction> processor, FlowableProcessor<Pair<String, Boolean>> focusProcessor) {
+    public static FieldViewModel create(String id, String label, Boolean mandatory, String value, String section, Boolean editable, String description, ObjectStyle objectStyle, boolean isBackgroundTransparent, boolean isSearchMode, FlowableProcessor<RowAction> processor, FlowableProcessor<RowAction> focusProcessor) {
         return new AutoValue_AgeViewModel(id, label, section, null, editable, null, null, null, description, objectStyle, null, DataEntryViewHolderTypes.AGE_VIEW, processor, focusProcessor, false, mandatory, value, isBackgroundTransparent, isSearchMode);
     }
 

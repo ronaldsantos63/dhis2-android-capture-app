@@ -12,7 +12,6 @@ import org.dhis2.data.forms.dataentry.fields.RowAction;
 import org.hisp.dhis.android.core.common.ObjectStyle;
 
 import io.reactivex.processors.FlowableProcessor;
-import kotlin.Pair;
 
 @AutoValue
 public abstract class DisplayViewModel extends FieldViewModel {
@@ -21,7 +20,7 @@ public abstract class DisplayViewModel extends FieldViewModel {
         return new AutoValue_DisplayViewModel(id, label, false, value, null, null, false, null, null, null, description, ObjectStyle.builder().build(), null, DataEntryViewHolderTypes.DISPLAY,null, null, false);
     }
 
-    public static DisplayViewModel create(String id, String label, String value, String description, FlowableProcessor<RowAction> processor, FlowableProcessor<Pair<String, Boolean>> focusProcessor) {
+    public static DisplayViewModel create(String id, String label, String value, String description, FlowableProcessor<RowAction> processor, FlowableProcessor<RowAction> focusProcessor) {
         return new AutoValue_DisplayViewModel(id, label, false, value, null, null, false, null, null, null, description, ObjectStyle.builder().build(), null, DataEntryViewHolderTypes.DISPLAY, processor, focusProcessor, false);
     }
 

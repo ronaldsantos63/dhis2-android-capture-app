@@ -17,7 +17,6 @@ import org.hisp.dhis.android.core.common.ValueType;
 import org.hisp.dhis.android.core.common.ValueTypeDeviceRendering;
 
 import io.reactivex.processors.FlowableProcessor;
-import kotlin.Pair;
 
 /**
  * QUADRAM. Created by frodriguez on 1/24/2018.
@@ -41,7 +40,7 @@ public abstract class EditTextViewModel extends EditTextModel<String> {
                                            @NonNull Integer lines, @NonNull ValueType valueType, @Nullable String section,
                                            @NonNull Boolean editable, @Nullable String description,
                                            @Nullable ValueTypeDeviceRendering fieldRendering, ObjectStyle objectStyle, @Nullable String fieldMask, String renderType, boolean isBackgroundTransparent,
-                                           boolean isSearchMode, FlowableProcessor<RowAction> processor, FlowableProcessor<Pair<String, Boolean>> focusProcessor) {
+                                           boolean isSearchMode, FlowableProcessor<RowAction> processor, FlowableProcessor<RowAction> focusProcessor) {
         return new AutoValue_EditTextViewModel(uid, label, mandatory,
                 value, section, null, editable, null, description, objectStyle, fieldMask, DataEntryViewHolderTypes.EDIT_TEXT, processor, focusProcessor, false, hint, lines,
                 InputType.TYPE_CLASS_TEXT, valueType, null, null, renderType, isBackgroundTransparent, isSearchMode, fieldRendering);
@@ -105,6 +104,19 @@ public abstract class EditTextViewModel extends EditTextModel<String> {
             return R.layout.form_long_text_custom;
         }
         return R.layout.form_edit_text_custom;
+    }
+
+    public void onTextChange(String value) {
+        processor().onNext(new RowAction(
+                uid(),
+                value,
+                null,
+                null,
+                null,
+                null,
+                null,
+                ActionType.ON_TEXT_CHANGE
+        ));
     }
 
     public void onTextFilled(String value, String error) {

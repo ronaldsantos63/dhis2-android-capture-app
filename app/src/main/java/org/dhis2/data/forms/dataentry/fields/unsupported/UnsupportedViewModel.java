@@ -11,7 +11,6 @@ import org.dhis2.data.forms.dataentry.fields.RowAction;
 import org.hisp.dhis.android.core.common.ObjectStyle;
 
 import io.reactivex.processors.FlowableProcessor;
-import kotlin.Pair;
 
 @AutoValue
 public abstract class UnsupportedViewModel extends FieldViewModel {
@@ -19,7 +18,7 @@ public abstract class UnsupportedViewModel extends FieldViewModel {
         return new AutoValue_UnsupportedViewModel(id, label, false, value, section, null, false, null, null, null, description, objectStyle, null, DataEntryViewHolderTypes.UNSUPPORTED, null, null, false);
     }
 
-    public static FieldViewModel create(String id, String label, Boolean mandatory, String value, String section, Boolean editable, String description, ObjectStyle objectStyle, FlowableProcessor<RowAction> processor, FlowableProcessor<Pair<String, Boolean>> focusProcessor) {
+    public static FieldViewModel create(String id, String label, Boolean mandatory, String value, String section, Boolean editable, String description, ObjectStyle objectStyle, FlowableProcessor<RowAction> processor, FlowableProcessor<RowAction> focusProcessor) {
         return new AutoValue_UnsupportedViewModel(id, label, false, value, section, null, false, null, null, null, description, objectStyle, null, DataEntryViewHolderTypes.UNSUPPORTED, processor, focusProcessor, false);
     }
 

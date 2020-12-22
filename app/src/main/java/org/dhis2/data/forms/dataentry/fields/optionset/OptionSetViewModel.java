@@ -17,7 +17,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.processors.FlowableProcessor;
-import kotlin.Pair;
 
 @AutoValue
 public abstract class OptionSetViewModel extends FieldViewModel {
@@ -84,7 +83,7 @@ public abstract class OptionSetViewModel extends FieldViewModel {
                                             String renderType,
                                             ValueTypeDeviceRendering fieldRendering,
                                             FlowableProcessor<RowAction> processor,
-                                            FlowableProcessor<Pair<String, Boolean>> focusProcessor) {
+                                            FlowableProcessor<RowAction> focusProcessor) {
 
         return new AutoValue_OptionSetViewModel(
                 id,

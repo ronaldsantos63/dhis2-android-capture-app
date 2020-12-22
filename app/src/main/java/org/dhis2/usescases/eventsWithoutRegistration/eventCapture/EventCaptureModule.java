@@ -67,7 +67,7 @@ public class EventCaptureModule {
     EventCaptureContract.EventCaptureRepository provideRepository(FieldViewModelFactory fieldFactory,
                                                                   FormRepository formRepository,
                                                                   D2 d2,
-                                                                  FlowableProcessor<Pair<String, Boolean>> focusProcessor
+                                                                  FlowableProcessor<RowAction> focusProcessor
     ) {
         return new EventCaptureRepositoryImpl(fieldFactory, formRepository, eventUid, d2, focusProcessor);
     }

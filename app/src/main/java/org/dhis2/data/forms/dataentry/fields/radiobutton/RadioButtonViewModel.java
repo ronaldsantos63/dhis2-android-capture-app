@@ -17,7 +17,6 @@ import org.hisp.dhis.android.core.common.ValueTypeRenderingType;
 import java.util.Locale;
 
 import io.reactivex.processors.FlowableProcessor;
-import kotlin.Pair;
 
 /**
  * QUADRAM. Created by frodriguez on 1/24/2018.
@@ -70,7 +69,7 @@ public abstract class RadioButtonViewModel extends FieldViewModel {
     @NonNull
     public static RadioButtonViewModel fromRawValue(@NonNull String id, @NonNull String label, @NonNull ValueType type,
                                                     @NonNull Boolean mandatory, @Nullable String value, @Nullable String section,
-                                                    Boolean editable, @Nullable String description, ObjectStyle objectStyle, ValueTypeRenderingType renderingType, Boolean isBackgroundTransparent, FlowableProcessor<RowAction> processor, FlowableProcessor<Pair<String, Boolean>> focusProcessor, boolean isSearchMode) {
+                                                    Boolean editable, @Nullable String description, ObjectStyle objectStyle, ValueTypeRenderingType renderingType, Boolean isBackgroundTransparent, FlowableProcessor<RowAction> processor, FlowableProcessor<RowAction> focusProcessor, boolean isSearchMode) {
         if (value == null) {
             return new AutoValue_RadioButtonViewModel(id, label, null, section, null, editable, null, null, null, description, objectStyle, null, DataEntryViewHolderTypes.YES_NO, processor, focusProcessor, false, mandatory, type, renderingType, isBackgroundTransparent, isSearchMode);
         } else if (value.toLowerCase(Locale.US).equals(Value.CHECKED.toString())) {

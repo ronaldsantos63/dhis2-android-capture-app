@@ -38,7 +38,7 @@ abstract class MatrixOptionSetModel : FieldViewModel() {
             description: String?,
             style: ObjectStyle,
             processor: FlowableProcessor<RowAction>?,
-            focusProcessor: FlowableProcessor<Pair<String, Boolean>>,
+            focusProcessor: FlowableProcessor<RowAction>,
             options: List<Option>,
             numberOfColumns: Int
         ): MatrixOptionSetModel {

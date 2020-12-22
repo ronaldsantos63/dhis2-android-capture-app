@@ -47,7 +47,7 @@ class EnrollmentRepository(
     private val enrollmentDateDefaultLabel: String,
     private val incidentDateDefaultLabel: String,
     private val onRowActionProccesor: FlowableProcessor<RowAction>,
-    private val focusProcessor: FlowableProcessor<Pair<String, Boolean>>
+    private val focusProcessor: FlowableProcessor<RowAction>
 ) : DataEntryRepository {
 
     private val enrollmentRepository: EnrollmentObjectRepository =

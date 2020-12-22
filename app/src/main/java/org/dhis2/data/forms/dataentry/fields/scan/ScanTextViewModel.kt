@@ -74,7 +74,7 @@ abstract class ScanTextViewModel : FieldViewModel() {
             isBackgroundTransparent: Boolean,
             isSearchMode: Boolean,
             processor: FlowableProcessor<RowAction>,
-            focusProcessor: FlowableProcessor<Pair<String, Boolean>>
+            focusProcessor: FlowableProcessor<RowAction>
         ): FieldViewModel =
             AutoValue_ScanTextViewModel(
                 id,

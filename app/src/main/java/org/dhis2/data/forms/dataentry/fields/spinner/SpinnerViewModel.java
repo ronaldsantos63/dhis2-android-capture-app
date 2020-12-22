@@ -15,7 +15,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.processors.FlowableProcessor;
-import kotlin.Pair;
 
 /**
  * QUADRAM. Created by frodriguez on 1/24/2018.
@@ -40,7 +39,7 @@ public abstract class SpinnerViewModel extends FieldViewModel {
     }
 
     public static SpinnerViewModel create(String id, String label, String hintFilterOptions, Boolean mandatory,
-                                          String optionSet, String value, String section, Boolean editable, String description, ObjectStyle objectStyle, boolean isBackgroundTransparent, String renderType, FlowableProcessor<RowAction> processor, FlowableProcessor<Pair<String, Boolean>> focusProcessor) {
+                                          String optionSet, String value, String section, Boolean editable, String description, ObjectStyle objectStyle, boolean isBackgroundTransparent, String renderType, FlowableProcessor<RowAction> processor, FlowableProcessor<RowAction> focusProcessor) {
         return new AutoValue_SpinnerViewModel(id, label, mandatory, value, section, null, editable, null, null, description, objectStyle, null, DataEntryViewHolderTypes.OPTION_SET_SPINNER, processor, focusProcessor, false, hintFilterOptions, optionSet, isBackgroundTransparent, renderType);
     }
 

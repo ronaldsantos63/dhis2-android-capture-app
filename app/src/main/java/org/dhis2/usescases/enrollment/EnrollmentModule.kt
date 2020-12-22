@@ -64,7 +64,7 @@ class EnrollmentModule(
         dhisEnrollmentUtils: DhisEnrollmentUtils,
         onRowActionProcessor: FlowableProcessor<RowAction>,
         modelFactory: FieldViewModelFactory,
-        focusProcessor: FlowableProcessor<Pair<String, Boolean>>
+        focusProcessor: FlowableProcessor<RowAction>
     ): EnrollmentRepository {
         val enrollmentDataSectionLabel = context.getString(R.string.enrollment_data_section_label)
         val singleSectionLabel = context.getString(R.string.enrollment_single_section_label)
@@ -114,7 +114,7 @@ class EnrollmentModule(
         analyticsHelper: AnalyticsHelper,
         onRowActionProcessor: FlowableProcessor<RowAction>,
         fieldViewModelFactory: FieldViewModelFactory,
-        focusProcessor: FlowableProcessor<Pair<String, Boolean>>
+        focusProcessor: FlowableProcessor<RowAction>
     ): EnrollmentPresenterImpl {
         return EnrollmentPresenterImpl(
             enrollmentView,

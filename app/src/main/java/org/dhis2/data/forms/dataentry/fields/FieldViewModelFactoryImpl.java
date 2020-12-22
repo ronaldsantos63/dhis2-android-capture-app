@@ -36,7 +36,6 @@ import autovalue.shaded.org.checkerframework$.checker.nullness.qual.$NonNull;
 import io.reactivex.Flowable;
 import io.reactivex.processors.FlowableProcessor;
 import io.reactivex.processors.PublishProcessor;
-import kotlin.Pair;
 
 import static org.dhis2.data.forms.dataentry.EnrollmentRepository.SINGLE_SECTION_UID;
 import static org.dhis2.utils.Preconditions.isNull;
@@ -94,7 +93,7 @@ public final class FieldViewModelFactoryImpl implements FieldViewModelFactory {
     public FieldViewModel create(@NonNull String id, @NonNull String label, @NonNull ValueType type,
                                  @NonNull Boolean mandatory, @Nullable String optionSet, @Nullable String value,
                                  @Nullable String section, @Nullable Boolean allowFutureDates, @NonNull Boolean editable, @Nullable ProgramStageSectionRenderingType renderingType,
-                                 @Nullable String description, @Nullable ValueTypeDeviceRendering fieldRendering, @Nullable Integer optionCount, ObjectStyle objectStyle, @Nullable String fieldMask, @NonNull FlowableProcessor<RowAction> processor, List<Option> options, FlowableProcessor<Pair<String, Boolean>> focusProcessor) {
+                                 @Nullable String description, @Nullable ValueTypeDeviceRendering fieldRendering, @Nullable Integer optionCount, ObjectStyle objectStyle, @Nullable String fieldMask, @NonNull FlowableProcessor<RowAction> processor, List<Option> options, FlowableProcessor<RowAction> focusProcessor) {
         isNull(type, "type must be supplied");
         if (DhisTextUtils.Companion.isNotEmpty(optionSet)) {
             if (renderingType == null || renderingType == ProgramStageSectionRenderingType.LISTING) {
